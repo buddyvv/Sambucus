@@ -6,7 +6,7 @@ import sambucus.eldercraft.ElderCraft;
 
 public class PoisonGlands extends Item {
 	 public PoisonGlands() {
-	        setRegistryName("firstitem");        // The unique name (within your mod
-	        setUnlocalizedName("ec0.poisonglands");     // Used for localization (en_US.lang)
+	        setRegistryName("poisonglands");
+	        setUnlocalizedName("ec0.poisonglands");
 	   }
 }

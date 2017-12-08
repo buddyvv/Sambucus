@@ -1,0 +1,15 @@
+[
+{
+    "modid" : "ec0",
+    "name" : "ElderCraft",
+    "description" : "ElderCraft is a thing",
+    "version" : "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Stratigist , Buddyvv, lTobi"],
+    "credits": "Stratigist , Buddyvv, lTobi",
+    "logoFile": "",
+    "screenshots": []
+}
+]
