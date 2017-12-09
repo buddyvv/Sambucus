@@ -10,7 +10,7 @@ import sambucus.eldercraft.proxy.CommonProxy;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = ElderCraft.MODID, name = ElderCraft.MODNAME, version = ElderCraft.VERSION, dependencies = "required-after:Forge@[11.16.0.1865,)", useMetadata = true)
+@Mod(modid = ElderCraft.MODID, name = ElderCraft.MODNAME, version = ElderCraft.VERSION, useMetadata = true)
 public class ElderCraft {
 	
 	public static final String MODID = "ec0";
