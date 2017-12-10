@@ -1,0 +1,5 @@
+{
+    "variants": {
+               "inventory": {"model": "ec0:models/item/item_poisongland"}
+    }
+}

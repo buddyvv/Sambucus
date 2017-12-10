@@ -1,23 +1,22 @@
 package sambucus.eldercraft;
 
+import org.apache.logging.log4j.Logger;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import sambucus.eldercraft.proxy.CommonProxy;
+import sambucus.eldercraft.utility.Reference;
 
-import org.apache.logging.log4j.Logger;
 
-
-@Mod(modid = ElderCraft.MODID, name = ElderCraft.MODNAME, version = ElderCraft.VERSION, useMetadata = true)
+@Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, useMetadata = true)
 public class ElderCraft {
 	
-	public static final String MODID = "ec0";
-	public static final String MODNAME = "ElderCraft";
-	public static final String VERSION = "0.0.1";
 	
-	@SidedProxy(clientSide = "sambucus.eldercraft.proxy.ClientProxy", serverSide = "sambucus.eldercraft.proxy.ServerProxy")
+	
+	@SidedProxy(clientSide = Reference.Client, serverSide = Reference.Common)
     public static CommonProxy proxy;
 
     @Mod.Instance
