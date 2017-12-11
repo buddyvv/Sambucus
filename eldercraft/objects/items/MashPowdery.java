@@ -5,7 +5,6 @@ import sambucus.eldercraft.ElderCraft;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
-
 public class MashPowdery extends Item implements IHaveModel{
 	public MashPowdery(String name){
 		ItemInitialization.ITEMS.add(this);

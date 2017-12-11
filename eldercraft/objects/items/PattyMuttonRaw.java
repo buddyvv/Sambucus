@@ -6,20 +6,15 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 public class PattyMuttonRaw extends Item implements IHaveModel{
-
-	public PattyMuttonRaw(String name)
-	{
+	public PattyMuttonRaw(String name){
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(ElderCraft.eldercrafttab);
-		
+		setCreativeTab(ElderCraft.eldercrafttab);	
 	}
 
 	@Override
-	public void registerModels()
-	{
+	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(this, 0, "inventory");
 	}
-
 }
