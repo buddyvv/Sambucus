@@ -1,5 +1,31 @@
 tile.block_sugarcube.name=Sugar Cube
 
+item.item_beefpatty.name=Beef Patty
+item.item_chickenpatty.name=Chicken Patty
+item.item_fishpatty.name=Fish Patty
+item.item_leanpatty.name=Lean Patty
+item.item_meatpatty.name="Meat" Patty
+item.item_muttonpatty.name=Mutton Patty
+item.item_porkpatty.name=Pork Patty
+item.item_cookedbeefpatty.name=Cooked Beef Patty
+item.item_cookedchickenpatty.name=Cooked Chicken Patty
+item.item_cookedfishpatty.name=Cooked Fish Patty
+item.item_cookedleanpatty.name=Cooked Lean Patty
+item.item_cookedmuttonpatty.name=Cooked Mutton Patty
+item.item_cookedporkpatty.name=Cooked Pork Patty
+item.item_canofclearjuice.name=Can Of Clear Juice
+item.item_canofdensejuice.name=Can Of Dense Juice
+item.item_canoffizzyjuice.name=Can Of Fizzy Juice
+item.item_canofhotjuice.name=Can Of Hot Juice
+item.item_clusterofberries.name=Cluster Of Berries
+item.item_fishscales.name=Fish Scales
+item.item_ironcan.name=Iron Can
+item.item_oilyskin.name=Oily Skin
 item.item_poisongland.name=Poison Gland
+item.item_growingmash.name=Growing Mash
+item.item_powderymash.name=Powdery Mash
+item.item_prickleymash.name=Prickley Mash
+item.item_softmash.name=Soft Mash
+item.item_zombielumps.name=Zombie Lumps
 
 itemGroup.elderCraft=Elder Craft Creative Tab
