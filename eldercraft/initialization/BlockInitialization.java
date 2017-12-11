@@ -10,9 +10,9 @@ import sambucus.eldercraft.objects.blocks.sugarcube;
 
 public class BlockInitialization {
 
-		public static final List<Block> BLOCKS = new ArrayList<Block>();
+		public static final List<Block> BLOCKS = new ArrayList<Block>(); 							//The array list that is creating our item list. Shouldn't need to to touch this.
 		
-		public static final Block SUGARCUBE = new sugarcube("block_sugarcube",Material.GRASS);
+		public static final Block SUGARCUBE = new sugarcube("block_sugarcube",Material.GRASS);		//Initialization of the sugarcube block. Refers to sambucus.eldercraft.objects.blocks.sugarcube
 
 		
 }

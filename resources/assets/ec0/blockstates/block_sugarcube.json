@@ -1,8 +1,12 @@
 {
+    
+    "_comment": "Variants auto map to the block as defined by blockstate. assets/eco/textures/block....",
+    
+    
     "forge_marker": 1,
-    "variants": {
-               "inventory": [{"model": "ec0:models/block/block_sugarcube"}],
-               "normal": [{"model": "ec0:models/block/block_sugarcube"
-     }]
-}
+        
+        "variants": {
+            "normal":       {"model": "ec0:block_sugarcube"},                   
+            "inventory":    {"model": "ec0:block_sugarcube"}
+                    }
 }

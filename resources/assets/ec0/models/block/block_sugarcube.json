@@ -1,7 +1,11 @@
 {
-    "parent": "blocks/cube_all",
+    
+    "_comment": "model json made by tylerun ask him for changes",
+    
+    "forge_marker": 1,
+    "parent": "block/cube",
     "textures": {
-        "0": "blocks/sugar"
+        "0": "items/sugar"
     },
     "elements": [
         {
@@ -12,7 +16,7 @@
                 "north": { "texture": "#0", "uv": [ 5.0, 6.0, 11.0, 12.0 ] },
                 "east": { "texture": "#0", "uv": [ 5.0, 6.0, 11.0, 12.0 ] },
                 "south": { "texture": "#0", "uv": [ 5.0, 6.0, 11.0, 12.0 ] },
-                "west": { "texture": "#0", "uv": [ 5.0, 6.0, 7.0, 9.0 ] },
+                "west": { "texture": "#0", "uv": [ 5.0, 6.0, 11.0, 12.0 ] },
                 "up": { "texture": "#0", "uv": [ 5.0, 6.0, 11.0, 12.0 ] },
                 "down": { "texture": "#0", "uv": [ 5.0, 6.0, 11.0, 12.0 ] }
             }

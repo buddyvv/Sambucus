@@ -11,12 +11,13 @@ import sambucus.eldercraft.proxy.CommonProxy;
 import sambucus.eldercraft.utility.Reference;
 
 
-@Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, useMetadata = true)
+@Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, useMetadata = true)		//References to sambucus.eldercraft.utility.reference to gain this information
+
 public class ElderCraft {
 	
 	
 	
-	@SidedProxy(clientSide = Reference.Client, serverSide = Reference.Common)
+	@SidedProxy(clientSide = Reference.Client, serverSide = Reference.Common)			//Renaming a link to sambucus.eldercraft.utility.reference for the client and common proxy
     public static CommonProxy proxy;
 
     @Mod.Instance
