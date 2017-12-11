@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class PowderyMash extends Item implements IHaveModel{
+public class JuiceBurntCan extends Item implements IHaveModel{
 
-	public PowderyMash(String name)
+	public JuiceBurntCan(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

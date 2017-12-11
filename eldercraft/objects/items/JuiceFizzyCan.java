@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class LeanPatty extends Item implements IHaveModel{
+public class JuiceFizzyCan extends Item implements IHaveModel{
 
-	public LeanPatty(String name)
+	public JuiceFizzyCan(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

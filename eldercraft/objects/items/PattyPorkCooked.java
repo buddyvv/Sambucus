@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class SoftMash extends Item implements IHaveModel{
+public class PattyPorkCooked extends Item implements IHaveModel{
 
-	public SoftMash(String name)
+	public PattyPorkCooked(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class GrowingMash extends Item implements IHaveModel{
+public class BrewZombieLumps extends Item implements IHaveModel{
 
-	public GrowingMash(String name)
+	public BrewZombieLumps(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class PorkPatty extends Item implements IHaveModel{
+public class TempBerries extends Item implements IHaveModel{
 
-	public PorkPatty(String name)
+	public TempBerries(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

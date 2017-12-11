@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class ZombieLumps extends Item implements IHaveModel{
+public class JuiceClearCan extends Item implements IHaveModel{
 
-	public ZombieLumps(String name)
+	public JuiceClearCan(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

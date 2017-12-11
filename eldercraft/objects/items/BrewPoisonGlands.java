@@ -7,9 +7,9 @@ import sambucus.eldercraft.ElderCraft;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
-public class poisongland extends Item implements IHaveModel{
+public class BrewPoisonGlands extends Item implements IHaveModel{
 
-		public poisongland(String name)
+		public BrewPoisonGlands(String name)
 		{
 			ItemInitialization.ITEMS.add(this);
 			setUnlocalizedName(name);

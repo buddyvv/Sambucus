@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class ChickenPatty extends Item implements IHaveModel{
+public class PattyLeanCooked extends Item implements IHaveModel{
 
-	public ChickenPatty(String name)
+	public PattyLeanCooked(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

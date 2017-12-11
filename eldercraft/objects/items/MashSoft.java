@@ -6,9 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class OilySkin extends Item implements IHaveModel{
+public class MashSoft extends Item implements IHaveModel{
 
-	public OilySkin(String name)
+	public MashSoft(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

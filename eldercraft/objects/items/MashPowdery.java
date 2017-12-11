@@ -6,22 +6,16 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-
-public class CanOfDenseJuice extends Item implements IHaveModel{
-
-	public CanOfDenseJuice(String name)
-	{
+public class MashPowdery extends Item implements IHaveModel{
+	public MashPowdery(String name){
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(ElderCraft.eldercrafttab);
-		
 	}
 
 	@Override
-	public void registerModels()
-	{
+	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(this, 0, "inventory");
 	}
-
 }

@@ -6,9 +6,10 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
-public class ClusterOfBerries extends Item implements IHaveModel{
 
-	public ClusterOfBerries(String name)
+public class JuiceDenseCan extends Item implements IHaveModel{
+
+	public JuiceDenseCan(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);

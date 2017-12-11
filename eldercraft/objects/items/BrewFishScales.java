@@ -6,11 +6,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
 
+public class BrewFishScales extends Item implements IHaveModel{
 
-
-public class BeefPatty extends Item implements IHaveModel{
-
-	public BeefPatty(String name)
+	public BrewFishScales(String name)
 	{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);
