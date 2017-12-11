@@ -2,12 +2,14 @@ package sambucus.eldercraft;
 
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import sambucus.eldercraft.proxy.CommonProxy;
+import sambucus.eldercraft.utility.CreativeTab;
 import sambucus.eldercraft.utility.Reference;
 
 
@@ -40,4 +42,7 @@ public class ElderCraft {
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
     }
+    
+    public static final CreativeTabs eldercrafttab = new CreativeTab("eldercrafttab");
+    
 }

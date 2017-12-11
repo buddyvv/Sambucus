@@ -19,7 +19,7 @@ public class sugarcube extends Block implements IHaveModel{
 			super(material);
 			setUnlocalizedName(name);
 			setRegistryName(name);
-			setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+			setCreativeTab(ElderCraft.eldercrafttab);
 			
 			BlockInitialization.BLOCKS.add(this);
 			ItemInitialization.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));

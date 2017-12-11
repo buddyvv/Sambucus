@@ -14,7 +14,7 @@ public class poisongland extends Item implements IHaveModel{
 			ItemInitialization.ITEMS.add(this);
 			setUnlocalizedName(name);
 			setRegistryName(name);
-			setCreativeTab(CreativeTabs.BREWING);
+			setCreativeTab(ElderCraft.eldercrafttab);
 			
 		}
 	
