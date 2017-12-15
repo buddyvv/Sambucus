@@ -36,35 +36,35 @@ public class ItemInitialization {
 	//The array list that is creating our item list. Shouldn't need to to touch this. unless it is completely fucked up again
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	//extra brewing items
-	public static final Item POISONGLAND 		= new BrewPoisonGlands("item_poisongland");
 	public static final Item FISHSCALES 		= new BrewFishScales("item_fishscales");
 	public static final Item OILYSKIN 			= new BrewOilySkin("item_oilyskin");
+	public static final Item POISONGLAND 		= new BrewPoisonGlands("item_poisongland");
 	public static final Item ZOMBIELUMPS		= new BrewZombieLumps("item_zombielumps");
-	//"food" items
-	public static final Item BEEFPATTY 			= new PattyBeefRaw("item_rawbeefpatty");
-	public static final Item CHICKENPATTY 		= new PattyChickenRaw("item_rawchickenpatty");
-	public static final Item MUTTONPATTY 		= new PattyMuttonRaw("item_rawmuttonpatty");
-	public static final Item LEANPATTY 			= new PattyLeanRaw("item_rawleanpatty");
-	public static final Item FISHPATTY 			= new PattyFishRaw("item_rawfishpatty");
-	public static final Item PORKPATTY 			= new PattyPorkRaw("item_rawporkpatty");
-	public static final Item COOKEDBEEFPATTY 	= new PattyBeefCooked("item_cookedbeefpatty");
-	public static final Item COOKEDCHICKENPATTY = new PattyChickenCooked("item_cookedchickenpatty");
-	public static final Item COOKEDFISHPATTY 	= new PattyFishCooked("item_cookedfishpatty");
-	public static final Item COOKEDLEANPATTY 	= new PattyLeanCooked("item_cookedleanpatty");
-	public static final Item COOKEDMUTTONPATTY 	= new PattyMuttonCooked("item_cookedmuttonpatty");
-	public static final Item COOKEDPORKPATTY 	= new PattyPorkCooked("item_cookedporkpatty");
-	public static final Item ZMEATPATTY 		= new PattyZMeat("item_zmeatpatty");
 	//cans of juice
 	public static final Item IRONCAN 			= new IronCan("item_ironcan");
-	public static final Item CLEARJUICECAN 		= new JuiceClearCan("item_canofclearjuice");
-	public static final Item DENSEJUICECAN 		= new JuiceDenseCan("item_canofdensejuice");
-	public static final Item FIZZYJUICECAN 		= new JuiceFizzyCan("item_canoffizzyjuice");
-	public static final Item BURNTJUICECAN 		= new JuiceBurntCan("item_canofburntjuice");
+	public static final Item JUICECLEARCAN 		= new JuiceClearCan("item_canofclearjuice");
+	public static final Item JUICEDENSECAN 		= new JuiceDenseCan("item_canofdensejuice");
+	public static final Item JUICEFIZZYCAN 		= new JuiceFizzyCan("item_canoffizzyjuice");
+	public static final Item JUICEBURNTCAN 		= new JuiceBurntCan("item_canofburntjuice");
 	//mash
-	public static final Item GROWINGMASH 		= new MashGrowing("item_growingmash");
-	public static final Item POWDERYMASH 		= new MashPowdery("item_powderymash");
-	public static final Item PRICKLEYMASH 		= new MashPrickley("item_prickleymash");
-	public static final Item SOFTMASH	 		= new MashSoft("item_softmash");
+	public static final Item MASHGROWING 		= new MashGrowing("item_growingmash");
+	public static final Item MASHPOWDERY 		= new MashPowdery("item_powderymash");
+	public static final Item MASHPRICKLEY		= new MashPrickley("item_prickleymash");
+	public static final Item MASHSOFT	 		= new MashSoft("item_softmash");
+	//"food" items
+	public static final Item PATTYBEEFRAW 		= new PattyBeefRaw("item_rawbeefpatty");
+	public static final Item PATTYCHICKENRAW 	= new PattyChickenRaw("item_rawchickenpatty");
+	public static final Item PATTYFISHRAW 		= new PattyFishRaw("item_rawfishpatty");
+	public static final Item PATTYLEANRAW 		= new PattyLeanRaw("item_rawleanpatty");
+	public static final Item PATTYMUTTONRAW 	= new PattyMuttonRaw("item_rawmuttonpatty");
+	public static final Item PATTYPORKRAW 		= new PattyPorkRaw("item_rawporkpatty");
+	public static final Item PATTYBEEFCOOKED 	= new PattyBeefCooked("item_cookedbeefpatty");
+	public static final Item PATTYCHICKENCOOKED = new PattyChickenCooked("item_cookedchickenpatty");
+	public static final Item PATTYFISHCOOKED 	= new PattyFishCooked("item_cookedfishpatty");
+	public static final Item PATTYLEANCOOKED 	= new PattyLeanCooked("item_cookedleanpatty");
+	public static final Item PATTYMUTTONCOOKED 	= new PattyMuttonCooked("item_cookedmuttonpatty");
+	public static final Item PATTYPORKCOOKED 	= new PattyPorkCooked("item_cookedporkpatty");
+	public static final Item ZMEATPATTY 		= new PattyZMeat("item_zmeatpatty");
 	//temporary items
 	public static final Item CLUSTEROFBERRIES 	= new TempBerries("item_clusterofberries");
 }
