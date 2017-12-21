@@ -1,0 +1,6 @@
+{
+    "forge_marker": 1,
+    "variants": {
+               "inventory": {"model": "ec0:models/item/item_canoffizzyjuice"}
+    }
+}

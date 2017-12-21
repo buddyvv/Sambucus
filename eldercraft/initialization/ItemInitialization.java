@@ -33,7 +33,7 @@ import sambucus.eldercraft.objects.items.BrewPoisonGlands;
 
 public class ItemInitialization {
 	//public static final Item NAMEOFJAVACLASS = new javaclassname(case sensitive)("itemname");
-	//The array list that is creating our item list. Shouldn't need to to touch this. unless it is completely fucked up again
+	//The array list that is creating our item list. Shouldn't need to to touch this. Unless adding items into categories. 
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	//extra brewing items
 	public static final Item FISHSCALES 		= new BrewFishScales("item_fishscales");
