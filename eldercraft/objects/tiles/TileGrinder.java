@@ -7,21 +7,29 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import sambucus.eldercraft.utility.managers.GrinderManager;
 
-public class TileGrinder extends TileEntity implements IInventory {
+public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	//this will need to do some of the work to make the grinder function
-	//will also need to keep the items but that is for after it is alive
+	//will also need a fucking GUI
 	//will need to use the grinder manager to make this a bit nicer
 	
 	private final int intFuelMax = 1000;
 	private final int intFuelMin = 0;
 	private int intFuelHave = 0;
 	private ItemStack[] itemStacks;
-	private final int NUMBER_OF_SLOTS = 6;//fuel in,item in 3 item out+over flow
+	public static final int slotsIn = 1;
+	public static final int slotsFuel = 1;
+	public static final int slotsCan = 1;
+	public static final int slotsOut = 4;
+	public static final int slotsTotal = slotsIn + slotsFuel + slotsCan + slotsOut;
 	
 	public static void initialize() {
-		GameRegistry.registerTileEntity(TileGrinder.class ,"EC0:Grinder");
+		GameRegistry.registerTileEntity(TileGrinder.class ,"EC0:Grinder");//might need to move
 	}
 	
 	public void setFuelHave(int fuel) {
@@ -44,11 +52,8 @@ public class TileGrinder extends TileEntity implements IInventory {
 		parentNBTTagCompound.setInteger("havefuel", intFuelHave);
 		super.writeToNBT(parentNBTTagCompound); // The super call is required to save the tiles location
 
-		
-		
 		return parentNBTTagCompound;
 	}
-	
 	@Override
 	public void readFromNBT(NBTTagCompound parentNBTTagCompound){
 		int fuelcheck = 0;
@@ -124,15 +129,13 @@ public class TileGrinder extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {}
-	@Override
-	public void closeInventory(EntityPlayer player) {}
-
-	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		// TODO Auto-generated method stub
+		// TODO this should prevent useless items from going in maybe...
 		return false;
 	}
+	
+	private static final byte a = 0;
+	
 
 	@Override
 	public int getField(int id) {
@@ -150,8 +153,47 @@ public class TileGrinder extends TileEntity implements IInventory {
 	public int getFieldCount() {
 		return 0;
 	}
+	
+	public static ItemStack getSmeltingResultForItem(ItemStack stack) {
+		return GrinderManager.instance().getGrindingResult(stack);
+	}
+	//public static ItemStack getSmeltingResultForItem(ItemStack stack) { return FurnaceRecipes.instance().getSmeltingResult(stack); }
+	@Override
+	public void update() {
+		// TODO the thing that is updated each tick	
+	}
+	
 	@Override
 	public void clear() {
 		Arrays.fill(itemStacks, ItemStack.EMPTY);
+	}
+	@Override
+	public void openInventory(EntityPlayer player) {}
+	@Override
+	public void closeInventory(EntityPlayer player) {}
+
+	public static boolean isItemValidForFuelSlot(ItemStack stack) {
+		// TODO check if it can burn? could use getItemBurnTime(ItemStack) and see if it is not 0.
+		return true;
+	}
+
+	public static boolean isItemValidForOutputSlot(ItemStack stack) {
+		//no placing items in the wrong end
+		return false;
+	}
+
+	public static boolean isItemValidForInputSlot(ItemStack stack) {
+		// TODO check if we can grind it
+		return true;
+	}
+
+	public static boolean isItemValidForCanSlot(ItemStack stack) {
+		// TODO if it is a can
+		return true;
+	}
+	// returns the number of ticks the given item will burn. Returns 0 if the given item is not a valid fuel
+	public static short getItemBurnTime(ItemStack stack){
+		int burntime = TileEntityFurnace.getItemBurnTime(stack);  // just use the vanilla values
+		return (short)MathHelper.clamp(burntime, 0, Short.MAX_VALUE);
 	}
 }

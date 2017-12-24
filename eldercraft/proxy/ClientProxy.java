@@ -12,23 +12,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ClientProxy extends CommonProxy {
 
 		@Override
-		public void preInit(FMLPreInitializationEvent e) 
-		{
+		public void preInit(FMLPreInitializationEvent e) {
 	        super.preInit(e);
 	    }
 		@Override
-		public void registerItemRenderer(Item item, int meta, String id)
-		{
+		public void registerItemRenderer(Item item, int meta, String id){
 			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
-			
 		}
 		
 		@SubscribeEvent
-	    public static void registerModels(ModelRegistryEvent event) 
-		{
-			
-	    }
-
+	    public static void registerModels(ModelRegistryEvent event) {}
  
-    
 }

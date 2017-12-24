@@ -1,14 +1,20 @@
 package sambucus.eldercraft.objects.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,7 +25,7 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.objects.tiles.TileGrinder;
 import sambucus.eldercraft.utility.IHaveModel;
 
-public class BlockGrinder extends Block implements IHaveModel{
+public class BlockGrinder extends BlockContainer implements IHaveModel{
 	public BlockGrinder(String name, Material material){
 		super(material);
 		setUnlocalizedName(name);
@@ -46,10 +52,6 @@ public class BlockGrinder extends Block implements IHaveModel{
 	    return true;
 	}
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new  TileGrinder();
-	}
-	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -57,4 +59,28 @@ public class BlockGrinder extends Block implements IHaveModel{
 			TileGrinder tileEntityData = (TileGrinder)tileentity;
 		}
 	}
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new  TileGrinder();
+	}
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
+			EntityPlayer playerIn, EnumHand hand,EnumFacing side,
+			float hitX, float hitY, float hitZ) {
+		// Uses the gui handler registered to your mod to open the gui for the given gui id
+		// open on the server side only  (not sure why you shouldn't open client side too... vanilla doesn't, so we better not either)
+		if (worldIn.isRemote) return true;
+		//TODO add gui class 
+		//playerIn.openGui(MinecraftByExample.instance, GuiHandlerMBE31.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
+	}
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		if (tileEntity instanceof IInventory) {
+			InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory)tileEntity);
+		}
+		super.breakBlock(worldIn, pos, state);
+	}
+	
 }
