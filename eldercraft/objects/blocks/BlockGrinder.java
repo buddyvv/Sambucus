@@ -24,6 +24,7 @@ import sambucus.eldercraft.initialization.BlockInitialization;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.objects.tiles.TileGrinder;
 import sambucus.eldercraft.utility.IHaveModel;
+import sambucus.eldercraft.utility.handlers.GUIHandler;
 
 public class BlockGrinder extends BlockContainer implements IHaveModel{
 	public BlockGrinder(String name, Material material){
@@ -35,14 +36,14 @@ public class BlockGrinder extends BlockContainer implements IHaveModel{
 		ItemInitialization.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));	
 	}
 	//TODO get the god damn model in so it will look right... the GUI.png also
-/*	@Override //here for when we have the actual model that is not a full block nor light blocking
+	@Override //here for when we have the actual model that is not a full block nor light blocking
 	public boolean isOpaqueCube(IBlockState state){
 	    return false;
 	}
 	@Override
 	public boolean isFullCube(IBlockState state){
 	    return false;
-	}*/
+	}
 	@Override
 	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
@@ -69,9 +70,11 @@ public class BlockGrinder extends BlockContainer implements IHaveModel{
 			float hitX, float hitY, float hitZ) {
 		// Uses the gui handler registered to your mod to open the gui for the given gui id
 		// open on the server side only  (not sure why you shouldn't open client side too... vanilla doesn't, so we better not either)
-		if (worldIn.isRemote) return true;
-		//TODO add gui class 
-		//playerIn.openGui(MinecraftByExample.instance, GuiHandlerMBE31.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		if (worldIn.isRemote) {
+			return true;
+		}
+		//TODO this
+		playerIn.openGui(ElderCraft.instance, GUIHandler.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 	@Override

@@ -91,6 +91,55 @@ public class ContainerGrinder extends Container{
 		}
 	}
 	
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex){
+		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
+		
+		if (sourceSlot == null || !sourceSlot.getHasStack()) {
+			return ItemStack.EMPTY;  //EMPTY_ITEM
+		}
+		
+		ItemStack sourceStack = sourceSlot.getStack();
+		ItemStack copyOfSourceStack = sourceStack.copy();
+
+		// Check if the slot clicked is one of the vanilla container slots
+		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+			// This is a vanilla container slot so merge the stack into one of the furnace slots
+			// If the stack is grindable try to merge merge the stack into the input slots
+			if (!TileGrinder.getSmeltingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
+				if (!mergeItemStack(sourceStack, FIRST_INPUT_SLOT_INDEX, FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
+					return ItemStack.EMPTY;  //EMPTY_ITEM;
+				}
+			}else if (TileGrinder.getItemBurnTime(sourceStack) > 0) {
+				if (!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, true)) {
+					// Setting the boolean to true places the stack in the bottom slot first
+					return ItemStack.EMPTY;  //EMPTY_ITEM;
+				}
+			}	else {
+				return ItemStack.EMPTY;  //EMPTY_ITEM;
+			}
+		} else if (sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT) {
+			// This is a furnace slot so merge the stack into the players inventory: try the hotbar first and then the main inventory
+			//   because the main inventory slots are immediately after the hotbar slots, we can just merge with a single call
+			if (!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
+				return ItemStack.EMPTY;  //EMPTY_ITEM;
+			}
+		} else {
+			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
+			return ItemStack.EMPTY;  //EMPTY_ITEM;
+		}
+
+		// If stack size == 0 (the entire stack was moved) set slot contents to null
+		if (sourceStack.getCount() == 0) {  //getStackSize()
+			sourceSlot.putStack(ItemStack.EMPTY);  // Empty Item
+		} else {
+			sourceSlot.onSlotChanged();
+		}
+
+		sourceSlot.onTake(player, sourceStack);  // onPickupFromSlot()
+		return copyOfSourceStack;
+	}
+	
 	// SlotFuel is a slot for fuel items
 	public class SlotFuel extends Slot {
 		public SlotFuel(IInventory inventoryIn, int index, int xPosition, int yPosition) {
@@ -103,7 +152,6 @@ public class ContainerGrinder extends Container{
 			return TileGrinder.isItemValidForFuelSlot(stack);
 		}
 	}
-	// SlotGrindableInput is a slot for input items
 	public class SlotGrindableInput extends Slot {
 		public SlotGrindableInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
@@ -115,7 +163,6 @@ public class ContainerGrinder extends Container{
 			return TileGrinder.isItemValidForInputSlot(stack);
 		}
 	}
-	// SlotCanInput is a slot for input items
 	public class SlotCanInput extends Slot {
 		public SlotCanInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);

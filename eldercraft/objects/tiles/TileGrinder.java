@@ -48,10 +48,10 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	}
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound parentNBTTagCompound){
-		//TODO is not saving state
+		//TODO is not saving state , still.
 		parentNBTTagCompound.setInteger("havefuel", intFuelHave);
 		super.writeToNBT(parentNBTTagCompound); // The super call is required to save the tiles location
-
+		//will need to add inventory to here i think
 		return parentNBTTagCompound;
 	}
 	@Override
@@ -69,32 +69,32 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "container.ec0_inventory_grinder.name";
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 0;
+		return itemStacks.length;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		for (ItemStack itemstack : itemStacks) {
+			if (!itemstack.isEmpty()) {  // isEmpty()
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemStacks[index];
 	}
 
 	@Override
@@ -124,8 +124,12 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.world.getTileEntity(this.pos) != this) return false;
+		final double X_CENTRE_OFFSET = 0.5;
+		final double Y_CENTRE_OFFSET = 0.5;
+		final double Z_CENTRE_OFFSET = 0.5;
+		final double MAXIMUM_DISTANCE_SQ = 8.0 * 8.0;
+		return player.getDistanceSq(pos.getX() + X_CENTRE_OFFSET, pos.getY() + Y_CENTRE_OFFSET, pos.getZ() + Z_CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ;
 	}
 
 	@Override
@@ -142,10 +146,27 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	//private static final byte GRIND_FIELD_ID = 0;
+	//private static final byte FIRST_BURN_TIME_REMAINING_FIELD_ID = 1;
+	//private static final byte FIRST_BURN_TIME_INITIAL_FIELD_ID = FIRST_BURN_TIME_REMAINING_FIELD_ID + (byte)FUEL_SLOTS_COUNT;
+	//private static final byte NUMBER_OF_FIELDS = FIRST_BURN_TIME_INITIAL_FIELD_ID + (byte)FUEL_SLOTS_COUNT;
+	
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+		// TODO Too much to deal with at 6am
+		/*
+		if (id == GRIND_FIELD_ID) {
+			return cookTime;
+		}
+		if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + FUEL_SLOTS_COUNT) {
+			return burnTimeRemaining[id - FIRST_BURN_TIME_REMAINING_FIELD_ID];
+		}
+		if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
+			return burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID];
+		}
+		System.err.println("Invalid field ID in TileInventorySmelting.getField:" + id);
+		*/
+		return;
 		
 	}
 
@@ -161,6 +182,12 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	@Override
 	public void update() {
 		// TODO the thing that is updated each tick	
+		//add fuel to "tank"
+		
+		//grind items and remove fuel from tank
+		
+		//when done do the thing and give the outputs
+		
 	}
 	
 	@Override
@@ -192,7 +219,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		return true;
 	}
 	// returns the number of ticks the given item will burn. Returns 0 if the given item is not a valid fuel
-	public static short getItemBurnTime(ItemStack stack){
+	public static short getItemBurnTime(ItemStack stack){//we will probably rather than use it as time use a ++to the fuel we have and a -- when doing a task
 		int burntime = TileEntityFurnace.getItemBurnTime(stack);  // just use the vanilla values
 		return (short)MathHelper.clamp(burntime, 0, Short.MAX_VALUE);
 	}

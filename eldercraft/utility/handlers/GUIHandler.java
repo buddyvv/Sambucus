@@ -10,7 +10,8 @@ import sambucus.eldercraft.objects.tiles.TileGrinder;
 import sambucus.eldercraft.utility.gui.GuiGrinder;
 
 public class GUIHandler implements IGuiHandler {
-
+	public static int getGuiID() {return 1;}
+	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		BlockPos xyz = new BlockPos(x, y, z);
@@ -21,7 +22,6 @@ public class GUIHandler implements IGuiHandler {
 		}
 		return null;
 	}
-
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		BlockPos xyz = new BlockPos(x, y, z);
@@ -32,5 +32,4 @@ public class GUIHandler implements IGuiHandler {
 		}
 		return null;
 	}
-
 }
