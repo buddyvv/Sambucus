@@ -67,12 +67,12 @@ public class GuiGrinder extends GuiContainer {
 		//		(int)(cookProgress * COOK_BAR_WIDTH), COOK_BAR_HEIGHT);
 		
 		// draw the fuel remaining bar for each fuel slot flame
-		for (int i = 0; i < tileEntity.slotsFuel; ++i) {
+		//for (int i = 0; i < tileEntity.FUEL_SLOT_COUNT; ++i) {
 			//double burnRemaining = tileEntity.fractionOfFuelRemaining(i);
 			//int yOffset = (int)((1.0 - burnRemaining) * FLAME_HEIGHT);
 			//drawTexturedModalRect(guiLeft + FLAME_XPOS + FLAME_X_SPACING * i, guiTop + FLAME_YPOS + yOffset,
 			//		FLAME_ICON_U, FLAME_ICON_V + yOffset, FLAME_WIDTH, FLAME_HEIGHT - yOffset);
-		}	
+		//}	
 	}
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

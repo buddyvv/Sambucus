@@ -68,13 +68,15 @@ public class BlockGrinder extends BlockContainer implements IHaveModel{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
 			EntityPlayer playerIn, EnumHand hand,EnumFacing side,
 			float hitX, float hitY, float hitZ) {
+		
 		// Uses the gui handler registered to your mod to open the gui for the given gui id
 		// open on the server side only  (not sure why you shouldn't open client side too... vanilla doesn't, so we better not either)
 		if (worldIn.isRemote) {
 			return true;
 		}
-		//TODO this
+		//TODO make this work
 		playerIn.openGui(ElderCraft.instance, GUIHandler.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		System.err.println("Is the GUI open?" + " " + GUIHandler.getGuiID());//TODO
 		return true;
 	}
 	@Override
@@ -85,5 +87,4 @@ public class BlockGrinder extends BlockContainer implements IHaveModel{
 		}
 		super.breakBlock(worldIn, pos, state);
 	}
-	
 }

@@ -25,8 +25,8 @@ public class ContainerGrinder extends Container{
 	//hate all the things
 	private final int VANILLA_FIRST_SLOT_INDEX = 0;
 	private final int FIRST_FUEL_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-	private final int FIRST_INPUT_SLOT_INDEX = FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT;
-	private final int FIRST_CAN_SLOT_INDEX = FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT;
+	private final int INPUT_SLOT_INDEX = FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT;
+	private final int FIRST_CAN_SLOT_INDEX = INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT;
 	private final int FIRST_OUTPUT_SLOT_INDEX = FIRST_CAN_SLOT_INDEX + INPUT_CAN_COUNT;
 	
 	private final int FIRST_FUEL_SLOT_NUMBER = 0;
@@ -93,6 +93,7 @@ public class ContainerGrinder extends Container{
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex){
+		System.err.println("call transferStackInSlot ln-96");//TODO
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
 		
 		if (sourceSlot == null || !sourceSlot.getHasStack()) {
@@ -106,8 +107,8 @@ public class ContainerGrinder extends Container{
 		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
 			// This is a vanilla container slot so merge the stack into one of the furnace slots
 			// If the stack is grindable try to merge merge the stack into the input slots
-			if (!TileGrinder.getSmeltingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
-				if (!mergeItemStack(sourceStack, FIRST_INPUT_SLOT_INDEX, FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
+			if (!TileGrinder.getGrindingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
+				if (!mergeItemStack(sourceStack, INPUT_SLOT_INDEX, INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
 					return ItemStack.EMPTY;  //EMPTY_ITEM;
 				}
 			}else if (TileGrinder.getItemBurnTime(sourceStack) > 0) {
