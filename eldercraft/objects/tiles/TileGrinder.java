@@ -23,7 +23,6 @@ import sambucus.eldercraft.utility.managers.GrinderManager;
 
 public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	//this will need to do some of the work to make the grinder function
-	//will also need a fucking GUI
 	
 	//FUEL THIS CAN HOLD
 	private final int intFuelMax = 1000;
@@ -356,7 +355,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	
 	@Override
 	public int getField(int id) {
-		// TODO make this work for the grinder AND UNDERSTAND IT BETTER
+		// TODO make this work for the grinder
 		if (id == GRIND_FIELD_ID) {
 			return grindTime;
 		}
@@ -366,7 +365,8 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		if (id == BURN_TIME_INITIAL_FIELD_ID) {
 			//return burnTimeInitialValue;
 		}
-		System.err.println("Invalid field ID in TileInventorySmelting.getField:" + id);
+		//TODO this needs to be fixed
+		System.err.println("the ID in getField is wrong " + id + " is not accounted for");
 		return 0;
 	}
 	

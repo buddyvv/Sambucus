@@ -10,12 +10,10 @@ public class GuiHandlerRegistry implements IGuiHandler {
 	private static GuiHandlerRegistry guiHandlerRegistry = new GuiHandlerRegistry();
 	
 	public void registerGuiHandler(IGuiHandler handler, int guiID){
-		System.err.println(" ln-13 called");
 		registeredHandlers.put(guiID, handler);
 	}
 
 	public static GuiHandlerRegistry getInstance() {
-		System.err.println("call guiHandlerReg ln-17");//TODO
 		return guiHandlerRegistry;
 	}
 

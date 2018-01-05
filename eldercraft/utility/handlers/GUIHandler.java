@@ -11,7 +11,6 @@ import sambucus.eldercraft.utility.gui.GuiGrinder;
 
 public class GUIHandler implements IGuiHandler {
 	public static int getGuiID() {
-		System.err.println("get the GUI ID");//TODO this is called twice quickly
 		return 1;
 	}
 	

@@ -3,6 +3,7 @@ package sambucus.eldercraft.objects.tiles;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,7 @@ public class ContainerGrinder extends Container{
 	public ContainerGrinder(InventoryPlayer invPlayer, TileGrinder tileGrinder) {
 		this.tileGrinder = tileGrinder;
 		
-		final int SLOT_X_SPACING = 18;//NO way this will work for us
+		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;
 		final int HOTBAR_XPOS = 8;//Should be fine
 		final int HOTBAR_YPOS = 183;
@@ -58,6 +59,7 @@ public class ContainerGrinder extends Container{
 				addSlotToContainer(new Slot(invPlayer, slotNumber,  xpos, ypos));
 			}
 		}
+		//TODO the gui image will need to be worked on
 		final int FUEL_SLOTS_XPOS = 53;
 		final int FUEL_SLOTS_YPOS = 96;
 		// Add the tile fuel slots
@@ -73,7 +75,7 @@ public class ContainerGrinder extends Container{
 			addSlotToContainer(new SlotGrindableInput(tileGrinder, slotNumber, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS+ SLOT_Y_SPACING * y));
 		}
 		
-		final int CAN_SLOT_XPOS = 124;
+		final int CAN_SLOT_XPOS = 124;//yes i just guessed
 		final int CAN_SLOT_YPOS = 34;
 		//ADD THE CAN SLOT
 		for (int y = 0; y < INPUT_CAN_COUNT; y++) {
@@ -81,10 +83,10 @@ public class ContainerGrinder extends Container{
 			addSlotToContainer(new SlotCanInput(tileGrinder, slotNumber, CAN_SLOT_XPOS, CAN_SLOT_YPOS + SLOT_Y_SPACING * y));
 		}
 		
-
 		final int OUTPUT_SLOTS_XPOS = 134;
 		final int OUTPUT_SLOTS_YPOS = 24;
 		// Add the tile output slots
+		//need to make this a 2x2 rather than a vertical line of slots
 		for (int y = 0; y < OUTPUT_SLOTS_COUNT; y++) {
 			int slotNumber = y + FIRST_OUTPUT_SLOT_NUMBER;
 			addSlotToContainer(new SlotOutput(tileGrinder, slotNumber, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS + SLOT_Y_SPACING * y));
@@ -93,46 +95,45 @@ public class ContainerGrinder extends Container{
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex){
-		System.err.println("call transferStackInSlot ln-96");//TODO
+		System.err.println("call transferStackInSlot ln-96");//TODO click the Dick
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
 		
 		if (sourceSlot == null || !sourceSlot.getHasStack()) {
-			return ItemStack.EMPTY;  //EMPTY_ITEM
+			return ItemStack.EMPTY;
 		}
 		
 		ItemStack sourceStack = sourceSlot.getStack();
 		ItemStack copyOfSourceStack = sourceStack.copy();
-
 		// Check if the slot clicked is one of the vanilla container slots
 		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
 			// This is a vanilla container slot so merge the stack into one of the furnace slots
 			// If the stack is grindable try to merge merge the stack into the input slots
 			if (!TileGrinder.getGrindingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
 				if (!mergeItemStack(sourceStack, INPUT_SLOT_INDEX, INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
-					return ItemStack.EMPTY;  //EMPTY_ITEM;
+					return ItemStack.EMPTY;
 				}
 			}else if (TileGrinder.getItemBurnTime(sourceStack) > 0) {
 				if (!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, true)) {
 					// Setting the boolean to true places the stack in the bottom slot first
-					return ItemStack.EMPTY;  //EMPTY_ITEM;
+					return ItemStack.EMPTY;
 				}
 			}	else {
-				return ItemStack.EMPTY;  //EMPTY_ITEM;
+				return ItemStack.EMPTY;
 			}
 		} else if (sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT) {
 			// This is a furnace slot so merge the stack into the players inventory: try the hotbar first and then the main inventory
 			//   because the main inventory slots are immediately after the hotbar slots, we can just merge with a single call
 			if (!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
-				return ItemStack.EMPTY;  //EMPTY_ITEM;
+				return ItemStack.EMPTY;
 			}
 		} else {
 			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
-			return ItemStack.EMPTY;  //EMPTY_ITEM;
+			return ItemStack.EMPTY;
 		}
 
 		// If stack size == 0 (the entire stack was moved) set slot contents to null
-		if (sourceStack.getCount() == 0) {  //getStackSize()
-			sourceSlot.putStack(ItemStack.EMPTY);  // Empty Item
+		if (sourceStack.getCount() == 0) {
+			sourceSlot.putStack(ItemStack.EMPTY);
 		} else {
 			sourceSlot.onSlotChanged();
 		}
@@ -141,12 +142,43 @@ public class ContainerGrinder extends Container{
 		return copyOfSourceStack;
 	}
 	
-	// SlotFuel is a slot for fuel items
+	@Override
+	public boolean canInteractWith(EntityPlayer playerIn) {
+		return tileGrinder.isUsableByPlayer(playerIn);
+	}
+	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		System.err.print("invin change ln-152 in container");//TODO click the dick
+		boolean allFieldsHaveChanged = false;
+		boolean fieldHasChanged [] = new boolean[tileGrinder.getFieldCount()];
+		if (cachedFields == null) {
+			cachedFields = new int[tileGrinder.getFieldCount()];
+			allFieldsHaveChanged = true;
+		}
+		for (int i = 0; i < cachedFields.length; ++i) {
+			if (allFieldsHaveChanged || cachedFields[i] != tileGrinder.getField(i)) {
+				cachedFields[i] = tileGrinder.getField(i);
+				fieldHasChanged[i] = true;
+			}
+		}
+
+		// go through the list of listeners (players using this container) and update them if necessary
+		for (IContainerListener listener : this.listeners) {
+			for (int fieldID = 0; fieldID < tileGrinder.getFieldCount(); ++fieldID) {
+				if (fieldHasChanged[fieldID]) {
+					// Note that although sendWindowProperty takes 2 ints on a server these are truncated to shorts
+					listener.sendWindowProperty(this, fieldID, cachedFields[fieldID]);
+				}
+			}
+		}
+	}
+	
 	public class SlotFuel extends Slot {
 		public SlotFuel(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-
 		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
@@ -157,7 +189,6 @@ public class ContainerGrinder extends Container{
 		public SlotGrindableInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-
 		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
@@ -168,7 +199,6 @@ public class ContainerGrinder extends Container{
 		public SlotCanInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-
 		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
@@ -179,15 +209,10 @@ public class ContainerGrinder extends Container{
 		public SlotOutput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-
 		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
 			return TileGrinder.isItemValidForOutputSlot(stack);
 		}
-	}
-	@Override
-	public boolean canInteractWith(EntityPlayer playerIn) {
-		return tileGrinder.isUsableByPlayer(playerIn);
 	}
 }
