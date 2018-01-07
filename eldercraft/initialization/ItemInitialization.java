@@ -2,41 +2,38 @@ package sambucus.eldercraft.initialization;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import sambucus.eldercraft.objects.items.BrewFishScales;
-import sambucus.eldercraft.objects.items.BrewOilySkin;
-import sambucus.eldercraft.objects.items.BrewPoisonGlands;
-import sambucus.eldercraft.objects.items.BrewZombieLumps;
-import sambucus.eldercraft.objects.items.IronCan;
-import sambucus.eldercraft.objects.items.JuiceBurntCan;
+import sambucus.eldercraft.objects.items.PattyBeefRaw;
 import sambucus.eldercraft.objects.items.JuiceClearCan;
 import sambucus.eldercraft.objects.items.JuiceDenseCan;
 import sambucus.eldercraft.objects.items.JuiceFizzyCan;
+import sambucus.eldercraft.objects.items.JuiceBurntCan;
+import sambucus.eldercraft.objects.items.PattyChickenRaw;
+import sambucus.eldercraft.objects.items.TempBerries;
+import sambucus.eldercraft.objects.items.PattyBeefCooked;
+import sambucus.eldercraft.objects.items.PattyChickenCooked;
+import sambucus.eldercraft.objects.items.PattyFishCooked;
+import sambucus.eldercraft.objects.items.PattyLeanCooked;
+import sambucus.eldercraft.objects.items.PattyMuttonCooked;
+import sambucus.eldercraft.objects.items.PattyPorkCooked;
+import sambucus.eldercraft.objects.items.PattyFishRaw;
+import sambucus.eldercraft.objects.items.BrewFishScales;
 import sambucus.eldercraft.objects.items.MashGrowing;
+import sambucus.eldercraft.objects.items.IronCan;
+import sambucus.eldercraft.objects.items.PattyLeanRaw;
+import sambucus.eldercraft.objects.items.PattyZMeat;
+import sambucus.eldercraft.objects.items.PattyMuttonRaw;
+import sambucus.eldercraft.objects.items.BrewOilySkin;
+import sambucus.eldercraft.objects.items.PattyPorkRaw;
 import sambucus.eldercraft.objects.items.MashPowdery;
 import sambucus.eldercraft.objects.items.MashPrickley;
 import sambucus.eldercraft.objects.items.MashSoft;
-import sambucus.eldercraft.objects.items.PattyBeefCooked;
-import sambucus.eldercraft.objects.items.PattyBeefRaw;
-import sambucus.eldercraft.objects.items.PattyChickenCooked;
-import sambucus.eldercraft.objects.items.PattyChickenRaw;
-import sambucus.eldercraft.objects.items.PattyFishCooked;
-import sambucus.eldercraft.objects.items.PattyFishRaw;
-import sambucus.eldercraft.objects.items.PattyLeanCooked;
-import sambucus.eldercraft.objects.items.PattyLeanRaw;
-import sambucus.eldercraft.objects.items.PattyMuttonCooked;
-import sambucus.eldercraft.objects.items.PattyMuttonRaw;
-import sambucus.eldercraft.objects.items.PattyPorkCooked;
-import sambucus.eldercraft.objects.items.PattyPorkRaw;
-import sambucus.eldercraft.objects.items.PattyZMeat;
-import sambucus.eldercraft.objects.items.TempBerries;
+import sambucus.eldercraft.objects.items.BrewZombieLumps;
+import sambucus.eldercraft.objects.items.BrewPoisonGlands;
 
 public class ItemInitialization {
 	//public static final Item NAMEOFJAVACLASS = new javaclassname(case sensitive)("itemname");
-	//The array list that is creating our item list. Shouldn't need to to touch this. Unless adding items into categories. 
+	//The array list that is creating our item list. Shouldn't need to to touch this. Unless adding items into categories.
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	//extra brewing items
 	public static final Item FISHSCALES 		= new BrewFishScales("item_fishscales");
@@ -55,20 +52,19 @@ public class ItemInitialization {
 	public static final Item MASHPRICKLEY		= new MashPrickley("item_prickleymash");
 	public static final Item MASHSOFT	 		= new MashSoft("item_softmash");
 	//"food" items
-	public static final Item PATTYBEEFRAW 		= new PattyBeefRaw("item_rawbeefpatty",	2, false);	
-	public static final Item PATTYCHICKENRAW 	= new PattyChickenRaw("item_rawchickenpatty", 2, false);	
-	public static final Item PATTYFISHRAW 		= new PattyFishRaw("item_rawfishpatty", 2, false);	
-	public static final Item PATTYLEANRAW 		= new PattyLeanRaw("item_rawleanpatty", 2, false);
-	public static final Item PATTYMUTTONRAW 	= new PattyMuttonRaw("item_rawmuttonpatty", 2, false);	
-	public static final Item PATTYPORKRAW 		= new PattyPorkRaw("item_rawporkpatty",	2, false);	
-	public static final Item PATTYBEEFCOOKED 	= new PattyBeefCooked("item_cookedbeefpatty", 4, false);
-	public static final Item PATTYCHICKENCOOKED = new PattyChickenCooked("item_cookedchickenpatty", 4, false);
-	public static final Item PATTYFISHCOOKED 	= new PattyFishCooked("item_cookedfishpatty", 4, false);
-	public static final Item PATTYLEANCOOKED 	= new PattyLeanCooked("item_cookedleanpatty", 4, false);
-	public static final Item PATTYMUTTONCOOKED 	= new PattyMuttonCooked("item_cookedmuttonpatty", 4, false);
-	public static final Item PATTYPORKCOOKED 	= new PattyPorkCooked("item_cookedporkpatty", 4, false);
-	public static final Item ZMEATPATTY 		= new PattyZMeat("item_zmeatpatty", 0, false, new PotionEffect(Potion.getPotionById(17), 200, 100));
-	
+	public static final Item PATTYBEEFRAW 		= new PattyBeefRaw("item_rawbeefpatty");
+	public static final Item PATTYCHICKENRAW 	= new PattyChickenRaw("item_rawchickenpatty");
+	public static final Item PATTYFISHRAW 		= new PattyFishRaw("item_rawfishpatty");
+	public static final Item PATTYLEANRAW 		= new PattyLeanRaw("item_rawleanpatty");
+	public static final Item PATTYMUTTONRAW 	= new PattyMuttonRaw("item_rawmuttonpatty");
+	public static final Item PATTYPORKRAW 		= new PattyPorkRaw("item_rawporkpatty");
+	public static final Item PATTYBEEFCOOKED 	= new PattyBeefCooked("item_cookedbeefpatty");
+	public static final Item PATTYCHICKENCOOKED = new PattyChickenCooked("item_cookedchickenpatty");
+	public static final Item PATTYFISHCOOKED 	= new PattyFishCooked("item_cookedfishpatty");
+	public static final Item PATTYLEANCOOKED 	= new PattyLeanCooked("item_cookedleanpatty");
+	public static final Item PATTYMUTTONCOOKED 	= new PattyMuttonCooked("item_cookedmuttonpatty");
+	public static final Item PATTYPORKCOOKED 	= new PattyPorkCooked("item_cookedporkpatty");
+	public static final Item ZMEATPATTY 		= new PattyZMeat("item_zmeatpatty");
 	//temporary items
 	public static final Item CLUSTEROFBERRIES 	= new TempBerries("item_clusterofberries");
 }

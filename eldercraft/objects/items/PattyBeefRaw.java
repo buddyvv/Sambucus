@@ -1,37 +1,20 @@
 package sambucus.eldercraft.objects.items;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
+import net.minecraft.item.Item;
 import sambucus.eldercraft.ElderCraft;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
-public class PattyBeefRaw extends ItemFood implements IHaveModel{
-	
-	
-	
-	public PattyBeefRaw(String name, int amount, boolean isWolfFood, PotionEffect... potionEffects){
-		super(amount, isWolfFood);
+public class PattyBeefRaw extends Item implements IHaveModel{
+	public PattyBeefRaw(String name){
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(ElderCraft.eldercrafttab);
-		this.effects = potionEffects;;	
+		setCreativeTab(ElderCraft.eldercrafttab);	
 	}
-	private PotionEffect[] effects;
-	
+
 	@Override
 	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(this, 0, "inventory");
 	}
-	
-	@Override
-	protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
-		for (PotionEffect effect : this.effects) {
-			player.addPotionEffect(new PotionEffect(effect));
-			}
-		}
 }

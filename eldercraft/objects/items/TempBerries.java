@@ -10,15 +10,11 @@ public class TempBerries extends Item implements IHaveModel{
 		ItemInitialization.ITEMS.add(this);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(ElderCraft.eldercrafttab);
-			
+		setCreativeTab(ElderCraft.eldercrafttab);	
 	}
-	
-	
+
 	@Override
 	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(this, 0, "inventory");
 	}
-	
-	
 }
