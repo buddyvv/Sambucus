@@ -152,11 +152,11 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		markDirty();
 		return true;
 	}
-	
+	/*
 	public static void initialize() {
-		GameRegistry.registerTileEntity(TileGrinder.class ,"EC0:Grinder");//might need to move
+		GameRegistry.registerTileEntity(TileGrinder.class ,"ec0:Grinder");//might need to move
 	}
-	
+	*/
 	public void setFuelHave(int fuel) {
 		intFuelHave = fuel;//TODO make this less stupid
 	}
@@ -174,7 +174,6 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	}
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound parentNBTTagCompound){
-		//parentNBTTagCompound.setInteger("havefuel", intFuelHave);
 		super.writeToNBT(parentNBTTagCompound); // The super call is required to save the tiles location
 		
 		NBTTagList dataForAllSlots = new NBTTagList();
@@ -192,25 +191,16 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 
 		// Save everything else
 		parentNBTTagCompound.setShort("GrindTime", grindTime);
-		//parentNBTTagCompound.setTag("burnTimeRemaining", new NBTTagIntArray(burnTimeRemaining));
-		//parentNBTTagCompound.setTag("burnTimeInitial", new NBTTagIntArray(burnTimeInitialValue));
+		parentNBTTagCompound.setTag("burnTimeRemaining", new NBTTagIntArray(burnTimeRemaining));
+		parentNBTTagCompound.setTag("burnTimeInitial", new NBTTagIntArray(burnTimeInitialValue));
 		
 		return parentNBTTagCompound;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound parentNBTTagCompound){
-		/* TODO whatever the fuck needs to be added to make this work for us ... i can't give a shit much longer
-		int fuelcheck = 0;
-		super.readFromNBT(parentNBTTagCompound); // The super call is required to load the tiles location
-		// important rule: never trust the data you read from NBT, make sure it can't cause a crash
-		if (parentNBTTagCompound.hasKey("havefuel",3)) {
-			fuelcheck = parentNBTTagCompound.getInteger("havefuel");
-			if(fuelcheck < 1) {
-				fuelcheck = 0;
-			}
-		}
-		*/
+		// TODO whatever the fuck needs to be added to make this work for us ... i can't give a shit much longer
+		
 		super.readFromNBT(parentNBTTagCompound); // The super call is required to save and load the tiles location
 		final byte NBT_TYPE_COMPOUND = 10;       // See NBTBase.createNewByType() for a listing
 		NBTTagList dataForAllSlots = parentNBTTagCompound.getTagList("Items", NBT_TYPE_COMPOUND);
@@ -366,7 +356,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 			//return burnTimeInitialValue;
 		}
 		//TODO this needs to be fixed
-		System.err.println("the ID in getField is wrong " + id + " is not accounted for");
+		//System.err.println("the ID in getField is wrong " + id + " is not accounted for");
 		return 0;
 	}
 	
@@ -467,7 +457,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 					// If the stack size now equals 0 set the slot contents to the items container item. This is for fuel
 					// items such as lava buckets so that the bucket is not consumed. If the item dose not have
 					// a container item getContainerItem returns null which sets the slot contents to null
-					if (itemStacks[fuelSlotNumber].getCount() == 0) {
+					if (itemStacks[fuelSlotNumber].getCount() == 0) {//TODO for fuel slots
 						itemStacks[fuelSlotNumber] = itemStacks[fuelSlotNumber].getItem().getContainerItem(itemStacks[fuelSlotNumber]);
 					}
 				}
@@ -503,7 +493,6 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	public void closeInventory(EntityPlayer player) {}//unused
 
 	public static boolean isItemValidForFuelSlot(ItemStack stack) {
-		// check if it can burn?
 		if (getItemBurnTime(stack) >= 1) {
 			return true;
 		}

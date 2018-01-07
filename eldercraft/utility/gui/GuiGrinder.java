@@ -14,7 +14,7 @@ import sambucus.eldercraft.objects.tiles.TileGrinder;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer {
 	//no idea if that will work
-	private static final ResourceLocation texture = new ResourceLocation("ElderCraft", "textures/gui/container/creative_inventory");
+	private static final ResourceLocation texture = new ResourceLocation("ec0", "textures/gui/container/grinder.png");
 	private TileGrinder tileEntity;
 	
 	
@@ -22,7 +22,7 @@ public class GuiGrinder extends GuiContainer {
 		super(new ContainerGrinder(invPlayer, tileGrinder));
 		// Set the width and height of the gui
 		xSize = 176;
-		ySize = 207;
+		ySize = 166;
 
 		this.tileEntity = tileGrinder;
 	}

@@ -40,8 +40,8 @@ public class ContainerGrinder extends Container{
 		
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;
-		final int HOTBAR_XPOS = 8;//Should be fine
-		final int HOTBAR_YPOS = 183;
+		final int HOTBAR_XPOS = 8;
+		final int HOTBAR_YPOS = 142;
 		
 		for (int x = 0; x < HOTBAR_SLOT_COUNT; x++) {
 			int slotNumber = x;
@@ -49,53 +49,50 @@ public class ContainerGrinder extends Container{
 		}
 		
 		final int PLAYER_INVENTORY_XPOS = 8;
-		final int PLAYER_INVENTORY_YPOS = 125;
-		// Add the rest of the players inventory to the gui
-		for (int y = 0; y < PLAYER_INVENTORY_ROW_COUNT; y++) {
-			for (int x = 0; x < PLAYER_INVENTORY_COLUMN_COUNT; x++) {
-				int slotNumber = HOTBAR_SLOT_COUNT + y * PLAYER_INVENTORY_COLUMN_COUNT + x;
+		final int PLAYER_INVENTORY_YPOS = 84;
+		for (int y = 0; y < 3; y++) {//PLAYER_INVENTORY_ROW_COUNT
+			for (int x = 0; x < 9; x++) {//PLAYER_INVENTORY_COLUMN_COUNT
+				//int slotNumber = HOTBAR_SLOT_COUNT + y * PLAYER_INVENTORY_COLUMN_COUNT + x;
+				int slotNumber = 9 + y * 9 + x;
 				int xpos = PLAYER_INVENTORY_XPOS + x * SLOT_X_SPACING;
 				int ypos = PLAYER_INVENTORY_YPOS + y * SLOT_Y_SPACING;
 				addSlotToContainer(new Slot(invPlayer, slotNumber,  xpos, ypos));
 			}
 		}
-		//TODO the gui image will need to be worked on
-		final int FUEL_SLOTS_XPOS = 53;
-		final int FUEL_SLOTS_YPOS = 96;
-		// Add the tile fuel slots
+		final int FUEL_SLOTS_XPOS = 50;
+		final int FUEL_SLOTS_YPOS = 37;
 		for (int x = 0; x < FUEL_SLOTS_COUNT; x++) {
 			int slotNumber = x + FIRST_FUEL_SLOT_NUMBER;
 			addSlotToContainer(new SlotFuel(tileGrinder, slotNumber, FUEL_SLOTS_XPOS + SLOT_X_SPACING * x, FUEL_SLOTS_YPOS));
 		}
-		final int INPUT_SLOTS_XPOS = 26;
-		final int INPUT_SLOTS_YPOS = 24;
-		// Add the tile input slots
+		final int INPUT_SLOTS_XPOS = 15;
+		final int INPUT_SLOTS_YPOS = 17;
 		for (int y = 0; y < INPUT_SLOTS_COUNT; y++) {
 			int slotNumber = y + FIRST_INPUT_SLOT_NUMBER;
 			addSlotToContainer(new SlotGrindableInput(tileGrinder, slotNumber, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS+ SLOT_Y_SPACING * y));
 		}
 		
-		final int CAN_SLOT_XPOS = 124;//yes i just guessed
-		final int CAN_SLOT_YPOS = 34;
-		//ADD THE CAN SLOT
+		final int CAN_SLOT_XPOS = 91;
+		final int CAN_SLOT_YPOS = 37;
 		for (int y = 0; y < INPUT_CAN_COUNT; y++) {
 			int slotNumber = y + FIRST_CAN_SLOT_NUMBER;
 			addSlotToContainer(new SlotCanInput(tileGrinder, slotNumber, CAN_SLOT_XPOS, CAN_SLOT_YPOS + SLOT_Y_SPACING * y));
 		}
 		
-		final int OUTPUT_SLOTS_XPOS = 134;
-		final int OUTPUT_SLOTS_YPOS = 24;
-		// Add the tile output slots
-		//need to make this a 2x2 rather than a vertical line of slots
-		for (int y = 0; y < OUTPUT_SLOTS_COUNT; y++) {
-			int slotNumber = y + FIRST_OUTPUT_SLOT_NUMBER;
-			addSlotToContainer(new SlotOutput(tileGrinder, slotNumber, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS + SLOT_Y_SPACING * y));
+		final int OUTPUT_SLOTS_XPOS = 120;
+		final int OUTPUT_SLOTS_YPOS = 19;
+		for (int y = 0; y < 2; y++) {
+			for (int x = 0; x < 2; x++) {
+				int xpos = OUTPUT_SLOTS_XPOS + x * SLOT_X_SPACING;
+				int ypos = OUTPUT_SLOTS_YPOS + y * SLOT_Y_SPACING;
+				int slotNumber = FIRST_OUTPUT_SLOT_NUMBER + y * 2 + x;
+				addSlotToContainer(new SlotOutput(tileGrinder, slotNumber, xpos, ypos));
+			}
 		}
 	}
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex){
-		System.err.println("call transferStackInSlot ln-96");//TODO click the Dick
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
 		
 		if (sourceSlot == null || !sourceSlot.getHasStack()) {
@@ -106,7 +103,6 @@ public class ContainerGrinder extends Container{
 		ItemStack copyOfSourceStack = sourceStack.copy();
 		// Check if the slot clicked is one of the vanilla container slots
 		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
-			// This is a vanilla container slot so merge the stack into one of the furnace slots
 			// If the stack is grindable try to merge merge the stack into the input slots
 			if (!TileGrinder.getGrindingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
 				if (!mergeItemStack(sourceStack, INPUT_SLOT_INDEX, INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
@@ -150,7 +146,6 @@ public class ContainerGrinder extends Container{
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		System.err.print("invin change ln-152 in container");//TODO click the dick
 		boolean allFieldsHaveChanged = false;
 		boolean fieldHasChanged [] = new boolean[tileGrinder.getFieldCount()];
 		if (cachedFields == null) {

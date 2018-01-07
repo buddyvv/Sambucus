@@ -1,6 +1,5 @@
 package sambucus.eldercraft.objects.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,13 +11,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import sambucus.eldercraft.ElderCraft;
 import sambucus.eldercraft.initialization.BlockInitialization;
 import sambucus.eldercraft.initialization.ItemInitialization;
@@ -35,7 +32,11 @@ public class BlockGrinder extends BlockContainer implements IHaveModel{
 		BlockInitialization.BLOCKS.add(this);
 		ItemInitialization.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));	
 	}
-	//TODO get the god damn model in so it will look right... the GUI.png also
+	@Override
+    public EnumBlockRenderType getRenderType(IBlockState state){
+        return EnumBlockRenderType.MODEL;
+    }
+	//TODO get the god damn model in so it will look right
 	@Override //here for when we have the actual model that is not a full block nor light blocking
 	public boolean isOpaqueCube(IBlockState state){
 	    return false;
@@ -76,7 +77,6 @@ public class BlockGrinder extends BlockContainer implements IHaveModel{
 		}
 		//TODO make this work
 		playerIn.openGui(ElderCraft.instance, GUIHandler.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
-		System.err.println("Is the GUI open?" + " " + GUIHandler.getGuiID());//TODO
 		return true;
 	}
 	@Override

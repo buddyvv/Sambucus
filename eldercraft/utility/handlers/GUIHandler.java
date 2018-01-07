@@ -22,11 +22,10 @@ public class GUIHandler implements IGuiHandler {
 		BlockPos xyz = new BlockPos(x, y, z);
 		TileEntity tileEntity = world.getTileEntity(xyz);
 		if (tileEntity instanceof TileGrinder) {
-			System.err.println("server call to get the GUI");//TODO
 			TileGrinder tileGrinder = (TileGrinder) tileEntity;
 			return new ContainerGrinder(player.inventory, tileGrinder);
 		}
-		System.err.println("server fail to get the GUI");//TODO
+		System.err.println("server fail to get the GUI");
 		return null;
 	}
 	@Override
@@ -37,11 +36,10 @@ public class GUIHandler implements IGuiHandler {
 		BlockPos xyz = new BlockPos(x, y, z);
 		TileEntity tileEntity = world.getTileEntity(xyz);
 		if (tileEntity instanceof TileGrinder) {
-			System.err.println("client call to get the GUI");//TODO
 			TileGrinder tileGrinder = (TileGrinder) tileEntity;
 			return new GuiGrinder(player.inventory, tileGrinder);
 		}
-		System.err.println("client failed to get the GUI");//TODO
+		System.err.println("client failed to get the GUI");
 		return null;
 	}
 }
