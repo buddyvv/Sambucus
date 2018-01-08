@@ -13,13 +13,10 @@ public class GuiHandlerRegistry implements IGuiHandler {
 	public void registerGuiHandler(IGuiHandler handler, int guiID){
 		registeredHandlers.put(guiID, handler);
 	}
-
 	public static GuiHandlerRegistry getInstance() {
 		return guiHandlerRegistry;
 	}
-
-	// Gets the server side element for the given gui id- this should return a container
-	@Override
+	@Override//this should return a container
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		IGuiHandler handler = registeredHandlers.get(ID);
 		if (handler != null) {
@@ -28,9 +25,7 @@ public class GuiHandlerRegistry implements IGuiHandler {
 			return null;
 		}
 	}
-
-	// Gets the client side element for the given gui id- this should return a gui
-	@Override
+	@Override//this should return a gui
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		IGuiHandler handler = registeredHandlers.get(ID);
 		if (handler != null) {

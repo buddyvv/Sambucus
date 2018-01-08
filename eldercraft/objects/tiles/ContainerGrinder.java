@@ -22,8 +22,8 @@ public class ContainerGrinder extends Container{
 	public final int INPUT_SLOTS_COUNT = 1;
 	public final int INPUT_CAN_COUNT = 1;
 	public final int OUTPUT_SLOTS_COUNT = 4;
-	public final int FURNACE_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT + INPUT_CAN_COUNT;
-	//hate all the things
+	public final int GRINDER_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT + INPUT_CAN_COUNT;
+
 	private final int VANILLA_FIRST_SLOT_INDEX = 0;
 	private final int FIRST_FUEL_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 	private final int INPUT_SLOT_INDEX = FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT;
@@ -90,7 +90,6 @@ public class ContainerGrinder extends Container{
 			}
 		}
 	}
-	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex){
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
@@ -101,24 +100,21 @@ public class ContainerGrinder extends Container{
 		
 		ItemStack sourceStack = sourceSlot.getStack();
 		ItemStack copyOfSourceStack = sourceStack.copy();
-		// Check if the slot clicked is one of the vanilla container slots
+
 		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
 			// If the stack is grindable try to merge merge the stack into the input slots
-			if (!TileGrinder.getGrindingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
+			if (!TileGrinder.getGrindingResultForItem(sourceStack).isEmpty()){
 				if (!mergeItemStack(sourceStack, INPUT_SLOT_INDEX, INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
 					return ItemStack.EMPTY;
 				}
 			}else if (TileGrinder.getItemBurnTime(sourceStack) > 0) {
 				if (!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, true)) {
-					// Setting the boolean to true places the stack in the bottom slot first
 					return ItemStack.EMPTY;
 				}
 			}	else {
 				return ItemStack.EMPTY;
 			}
-		} else if (sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT) {
-			// This is a furnace slot so merge the stack into the players inventory: try the hotbar first and then the main inventory
-			//   because the main inventory slots are immediately after the hotbar slots, we can just merge with a single call
+		} else if (sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + GRINDER_SLOTS_COUNT) {
 			if (!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
 				return ItemStack.EMPTY;
 			}
@@ -126,14 +122,11 @@ public class ContainerGrinder extends Container{
 			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
 			return ItemStack.EMPTY;
 		}
-
-		// If stack size == 0 (the entire stack was moved) set slot contents to null
 		if (sourceStack.getCount() == 0) {
 			sourceSlot.putStack(ItemStack.EMPTY);
 		} else {
 			sourceSlot.onSlotChanged();
 		}
-
 		sourceSlot.onTake(player, sourceStack);  // onPickupFromSlot()
 		return copyOfSourceStack;
 	}
@@ -158,8 +151,6 @@ public class ContainerGrinder extends Container{
 				fieldHasChanged[i] = true;
 			}
 		}
-
-		// go through the list of listeners (players using this container) and update them if necessary
 		for (IContainerListener listener : this.listeners) {
 			for (int fieldID = 0; fieldID < tileGrinder.getFieldCount(); ++fieldID) {
 				if (fieldHasChanged[fieldID]) {
@@ -174,7 +165,6 @@ public class ContainerGrinder extends Container{
 		public SlotFuel(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
 			return TileGrinder.isItemValidForFuelSlot(stack);
@@ -184,7 +174,6 @@ public class ContainerGrinder extends Container{
 		public SlotGrindableInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
 			return TileGrinder.isItemValidForInputSlot(stack);
@@ -194,7 +183,6 @@ public class ContainerGrinder extends Container{
 		public SlotCanInput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
 			return TileGrinder.isItemValidForCanSlot(stack);
@@ -204,7 +192,6 @@ public class ContainerGrinder extends Container{
 		public SlotOutput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
-		// if this function returns false, the player won't be able to insert the given item into this slot
 		@Override
 		public boolean isItemValid(ItemStack stack) {
 			return TileGrinder.isItemValidForOutputSlot(stack);

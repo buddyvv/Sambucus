@@ -51,19 +51,14 @@ public class GrinderManager {
 	public static GrinderManager instance() {
 		return GRINDING_BASE;
 	}
-	
 	private GrinderManager() {
 		//the place the list is to be written
 		this.addGinderRecipe(new ItemStack(Items.BEEF), 400, false,
-				new ItemStack(ItemInitialization.PATTYBEEFRAW), 350,
+				new ItemStack(ItemInitialization.PATTYRAWBEEF), 350,
 				new ItemStack(Items.DYE , 15), 175,
 				new ItemStack(Items.LEATHER), 100);
 		
 	}
-	
-//this needs a lot of work and some more thought just got the basic crap here
-	//still need to understand this mess
-	
 	public void addGinderRecipe(
 			ItemStack input, int fuel, boolean hasCan,
 			ItemStack output1, int output1Volume,
@@ -82,8 +77,9 @@ public class GrinderManager {
 		this.grindCostList.put(input, fuel);
 		this.canCheckList.put(input, hasCan);
 	}
-	
 	public ItemStack getGrindingResult(ItemStack stack){
+		//TODO in order to send the full result over a more complete function will need to be made 
+		//that will pass ALL the results and volumes rather than just the one
         for (Entry<ItemStack, ItemStack> entry : this.grindingR1List.entrySet()){
             if (this.compareItemStacks(stack, entry.getKey())){
                 return entry.getValue();
@@ -91,10 +87,8 @@ public class GrinderManager {
         }
         return ItemStack.EMPTY;
     }
-	//TODO understand what this is
 	private boolean compareItemStacks(ItemStack stack1, ItemStack stack2){
         return stack2.getItem() == stack1.getItem() &&
         		(stack2.getMetadata() == 32767 || stack2.getMetadata() == stack1.getMetadata());
     }
-	
 }

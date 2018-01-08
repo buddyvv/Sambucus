@@ -17,13 +17,9 @@ import sambucus.eldercraft.objects.items.Can_JuiceBurnt;
 import sambucus.eldercraft.objects.items.Can_JuiceClear;
 import sambucus.eldercraft.objects.items.Can_JuiceDense;
 import sambucus.eldercraft.objects.items.Can_JuiceFizzy;
-import sambucus.eldercraft.objects.items.Ground_Beef;
-import sambucus.eldercraft.objects.items.Ground_Chicken;
-import sambucus.eldercraft.objects.items.Ground_Fish;
-import sambucus.eldercraft.objects.items.Ground_Lean;
-import sambucus.eldercraft.objects.items.Ground_Mutton;
-import sambucus.eldercraft.objects.items.Ground_Pork;
-import sambucus.eldercraft.objects.items.Ground_ZombieMeat;
+import sambucus.eldercraft.objects.items.Condiment_Ketchup;
+import sambucus.eldercraft.objects.items.Condiment_Mayo;
+import sambucus.eldercraft.objects.items.Condiment_Mustard;
 import sambucus.eldercraft.objects.items.Mash_Growing;
 import sambucus.eldercraft.objects.items.Mash_Powdery;
 import sambucus.eldercraft.objects.items.Mash_Prickley;
@@ -51,6 +47,8 @@ public class ItemInitialization {
 	public static final Item OILYSKIN 			= new Brew_OilySkin("item_oilyskin");
 	public static final Item POISONGLAND 		= new Brew_PoisonGlands("item_poisongland");
 	public static final Item ZOMBIELUMPS		= new Brew_ZombieLumps("item_zombielumps");
+	
+	//brew results
 	public static final Item BREADPOTION 		= new Bread_Potion("item_breadpotion", 4, false);
 	
 	//Initialization of Items using cans
@@ -68,6 +66,9 @@ public class ItemInitialization {
 	
 	//Initialization of Miscellaneous Foods
 	public static final Item BREADSLICED	 	= new Bread_Sliced("item_breadsliced", 4, false);
+	public static final Item KETCHUP			= new Condiment_Ketchup("item_ketchup",0 ,false);//red
+	public static final Item MUSTARD			= new Condiment_Mustard("item_mustard",0 ,false);//yellow
+	public static final Item MAYO				= new Condiment_Mayo("item_mayo",0,false);//white
 	
 	//Initialization of Raw Patties
 	public static final Item PATTYRAWBEEF 		= new Patty_RawBeef("item_rawbeefpatty", 2, false);	
@@ -84,16 +85,7 @@ public class ItemInitialization {
 	public static final Item PATTYCOOKEDLEAN 	= new Patty_CookedLean("item_cookedleanpatty", 4, false);
 	public static final Item PATTYCOOKEDMUTTON 	= new Patty_CookedMutton("item_cookedmuttonpatty", 4, false);
 	public static final Item PATTYCOOKEDPORK 	= new Patty_CookedPork("item_cookedporkpatty", 4, false);
-	public static final Item ZMEATPATTY 		= new Patty_ZMeat("item_zmeatpatty", 0, false, new PotionEffect(Potion.getPotionById(17), 200, 100));
-	
-	//Initialization of Ground Meats
-	public static final Item GROUNDBEEF 		= new Ground_Beef("item_groundbeef", 2, false);
-	public static final Item GROUNDCHICKEN 		= new Ground_Chicken("item_groundchicken", 2, false);
-	public static final Item GROUNDFISH 		= new Ground_Fish("item_groundfish", 2, false);
-	public static final Item GROUNDLEAN 		= new Ground_Lean("item_groundlean", 2, false);
-	public static final Item GROUNDMUTTON 		= new Ground_Mutton("item_groundmutton", 2, false);
-	public static final Item GROUNDPORK 		= new Ground_Pork("item_groundpork", 2, false);
-	public static final Item GROUNDZOMBIE 		= new Ground_ZombieMeat("item_groundzombie", 2, false);
+	public static final Item PATTYZMEAT 		= new Patty_ZMeat("item_zmeatpatty", 0, false, new PotionEffect(Potion.getPotionById(17), 200, 100));
 	
 	//Initialization of temporary items
 	public static final Item CLUSTEROFBERRIES 	= new TempBerries("item_clusterofberries");

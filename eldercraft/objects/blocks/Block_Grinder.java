@@ -32,32 +32,26 @@ public class Block_Grinder extends BlockContainer implements IHaveModel{
 		BlockInitialization.BLOCKS.add(this);
 		ItemInitialization.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));	
 	}
-	
 	@Override
     public EnumBlockRenderType getRenderType(IBlockState state){
         return EnumBlockRenderType.MODEL;
     }
-	
-	@Override 
+	@Override
 	public boolean isOpaqueCube(IBlockState state){
 	    return false;
 	}
-	
 	@Override
 	public boolean isFullCube(IBlockState state){
 	    return false;
 	}
-	
 	@Override
 	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
 	}
-	
 	@Override
 	public boolean hasTileEntity(IBlockState state){
 	    return true;
 	}
-	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
@@ -66,24 +60,21 @@ public class Block_Grinder extends BlockContainer implements IHaveModel{
 			TileGrinder tileEntityData = (TileGrinder)tileentity;
 		}
 	}
-	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new  TileGrinder();
 	}
-	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
 			EntityPlayer playerIn, EnumHand hand,EnumFacing side,
 			float hitX, float hitY, float hitZ) {
-		
+		// open on the server side only  (not sure why you shouldn't open client side too... vanilla doesn't, so we better not either)
 		if (worldIn.isRemote) {
 			return true;
 		}
 		playerIn.openGui(ElderCraft.instance, GUIHandler.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
-	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileEntity = worldIn.getTileEntity(pos);
