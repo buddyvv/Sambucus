@@ -15,12 +15,13 @@ public class ClientProxy extends CommonProxy {
 		public void preInit(FMLPreInitializationEvent e) 
 		{
 	        super.preInit(e);
+	        ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation("ec0:block_grinder", "inventory");
+	        final int DEFAULT_ITEM_SUBTYPE = 0;
 	    }
 		@Override
 		public void registerItemRenderer(Item item, int meta, String id)
 		{
 			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
-			
 		}
 		
 		@SubscribeEvent
