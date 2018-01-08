@@ -9,7 +9,7 @@ import sambucus.eldercraft.ElderCraft;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
-public class Bread_Potion extends ItemFood implements IHaveModel{
+public class Bread_Potion extends ItemFood implements IHaveModel{//will be much more complex later
 	public Bread_Potion(String name, int amount, boolean isWolfFood, PotionEffect... potionEffects){
 		super(amount, isWolfFood);
 		ItemInitialization.ITEMS.add(this);

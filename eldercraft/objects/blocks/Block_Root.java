@@ -9,7 +9,7 @@ import sambucus.eldercraft.initialization.BlockInitialization;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
-public class Block_Root extends Block implements IHaveModel{
+public class Block_Root extends Block implements IHaveModel{//this will become a plant soon
 	public Block_Root(String name, Material material){
 		super(material);
 		setUnlocalizedName(name);
@@ -18,7 +18,6 @@ public class Block_Root extends Block implements IHaveModel{
 		BlockInitialization.BLOCKS.add(this);
 		ItemInitialization.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));	
 	}
-	
 	@Override
 	public void registerModels(){
 		ElderCraft.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");

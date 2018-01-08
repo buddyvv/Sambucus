@@ -9,7 +9,7 @@ import sambucus.eldercraft.ElderCraft;
 import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.IHaveModel;
 
-public class Condiment_Mustard extends ItemFood implements IHaveModel{
+public class Condiment_Mustard extends ItemFood implements IHaveModel{//can not eat just Mustard..
 	public Condiment_Mustard(String name, int amount, boolean isWolfFood, PotionEffect... potionEffects){
 		super(amount, isWolfFood);
 		ItemInitialization.ITEMS.add(this);

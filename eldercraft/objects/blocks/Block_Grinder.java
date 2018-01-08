@@ -36,8 +36,7 @@ public class Block_Grinder extends BlockContainer implements IHaveModel{
     public EnumBlockRenderType getRenderType(IBlockState state){
         return EnumBlockRenderType.MODEL;
     }
-	//TODO get the god damn model in so it will look right
-	@Override //here for when we have the actual model that is not a full block nor light blocking
+	@Override
 	public boolean isOpaqueCube(IBlockState state){
 	    return false;
 	}
@@ -69,13 +68,10 @@ public class Block_Grinder extends BlockContainer implements IHaveModel{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
 			EntityPlayer playerIn, EnumHand hand,EnumFacing side,
 			float hitX, float hitY, float hitZ) {
-		
-		// Uses the gui handler registered to your mod to open the gui for the given gui id
 		// open on the server side only  (not sure why you shouldn't open client side too... vanilla doesn't, so we better not either)
 		if (worldIn.isRemote) {
 			return true;
 		}
-		//TODO make this work
 		playerIn.openGui(ElderCraft.instance, GUIHandler.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
