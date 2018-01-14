@@ -2,6 +2,8 @@ package sambucus.eldercraft.utility.managers;
 
 import gnu.trove.map.hash.THashMap;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import sambucus.eldercraft.initialization.ItemInitialization;
 
@@ -51,23 +53,69 @@ public class GrinderManager {
 	public static GrinderManager instance() {
 		return GRINDING_BASE;
 	}
-	private GrinderManager() {
+	private GrinderManager(){
 		//the place the list is to be written
-		this.addGinderRecipe(new ItemStack(Items.BEEF), 400, false,
+		this.addGinderRecipe(Items.BEEF, 400, false,
 				new ItemStack(ItemInitialization.PATTYRAWBEEF), 350,
 				new ItemStack(Items.DYE , 15), 175,
 				new ItemStack(Items.LEATHER), 100);
 		
+		this.addGinderRecipe(Items.PORKCHOP, 200, false,
+				new ItemStack(ItemInitialization.PATTYRAWPORK), 225,
+				new ItemStack(Items.DYE , 15), 60,
+				new ItemStack(Items.LEATHER), 30);
+		
+		this.addGinderRecipe(Items.CHICKEN, 300, false,
+				new ItemStack(ItemInitialization.PATTYRAWCHICKEN), 100,
+				new ItemStack(Items.DYE , 15), 80,
+				new ItemStack(Items.WHEAT_SEEDS), 100);//change it to random seed type later
+		
+		this.addGinderRecipe(Items.RABBIT, 100, false,
+				new ItemStack(ItemInitialization.PATTYRAWLEAN), 100,
+				new ItemStack(Items.DYE , 15), 10,
+				new ItemStack(Items.RABBIT_FOOT), 1);
+		
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 0, 32767), 100, false,//normal
+				new ItemStack(ItemInitialization.PATTYRAWFISH), 100,
+				new ItemStack(Items.DYE , 15), 50,
+				new ItemStack(ItemInitialization.FISHSCALES), 10);
+		
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 1, 32767), 200, false,//salmon
+				new ItemStack(ItemInitialization.PATTYRAWFISH), 125,
+				new ItemStack(Items.DYE , 15), 80,
+				new ItemStack(ItemInitialization.FISHSCALES), 80);
+		
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 2, 32767), 100, false,//clown
+				new ItemStack(ItemInitialization.PATTYRAWFISH), 75,
+				new ItemStack(Items.DYE , 15), 25,
+				new ItemStack(ItemInitialization.OILYSKIN), 75);
+		
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 3, 32767), 100, false,//puff
+				new ItemStack(ItemInitialization.PATTYRAWFISH), 80,
+				new ItemStack(Items.DYE , 15), 10,
+				new ItemStack(ItemInitialization.POISONGLAND), 100);
 	}
-	public void addGinderRecipe(
-			ItemStack input, int fuel, boolean hasCan,
+	public void addGinderRecipe(Item input, int fuel, boolean hasCan,
 			ItemStack output1, int output1Volume,
 			ItemStack output2, int output2Volume,
 			ItemStack output3, int output3Volume) {
-		if (getGrindingResult(input) != ItemStack.EMPTY){
+		this.addGinderRecipeFinal(new ItemStack(input, 1, 32767), fuel, hasCan,
+				output1, output1Volume,
+				output2, output2Volume,
+				output3, output3Volume);
+	}
+	
+	public void addGinderRecipeFinal(
+			ItemStack input, int fuel, boolean hasCan,
+			ItemStack output1, int output1Volume,
+			ItemStack output2, int output2Volume,
+			ItemStack output3, int output3Volume){
+		
+		if (getGrindingR1(input) != ItemStack.EMPTY){
 			net.minecraftforge.fml.common.FMLLog.log.info("Ignored grinding recipe with conflicting input: {} = {}", input, output1);
 			return;
 		}
+		
 		this.grindingR1List.put(input, output1);
 		this.grindingR2List.put(input, output2);
 		this.grindingR3List.put(input, output3);
@@ -77,15 +125,69 @@ public class GrinderManager {
 		this.grindCostList.put(input, fuel);
 		this.canCheckList.put(input, hasCan);
 	}
-	public ItemStack getGrindingResult(ItemStack stack){
-		//TODO in order to send the full result over a more complete function will need to be made 
-		//that will pass ALL the results and volumes rather than just the one
+	public ItemStack getGrindingR1(ItemStack stack){
         for (Entry<ItemStack, ItemStack> entry : this.grindingR1List.entrySet()){
             if (this.compareItemStacks(stack, entry.getKey())){
                 return entry.getValue();
             }
         }
         return ItemStack.EMPTY;
+    }
+	public Integer getGrindingV1(ItemStack stack){
+        for (Entry<ItemStack, Integer> entry : this.grindingV1List.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
+	public ItemStack getGrindingR2(ItemStack stack){
+        for (Entry<ItemStack, ItemStack> entry : this.grindingR2List.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+	public Integer getGrindingV2(ItemStack stack){
+        for (Entry<ItemStack, Integer> entry : this.grindingV2List.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
+	public ItemStack getGrindingR3(ItemStack stack){
+        for (Entry<ItemStack, ItemStack> entry : this.grindingR3List.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+	public Integer getGrindingV3(ItemStack stack){
+        for (Entry<ItemStack, Integer> entry : this.grindingV3List.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
+	public Integer getGrindingCost(ItemStack stack){
+        for (Entry<ItemStack, Integer> entry : this.grindCostList.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
+	public Boolean getCanCheck(ItemStack stack){
+        for (Entry<ItemStack, Boolean> entry : this.canCheckList.entrySet()){
+            if (this.compareItemStacks(stack, entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return false;
     }
 	private boolean compareItemStacks(ItemStack stack1, ItemStack stack2){
         return stack2.getItem() == stack1.getItem() &&

@@ -103,7 +103,7 @@ public class ContainerGrinder extends Container{
 
 		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
 			// If the stack is grindable try to merge merge the stack into the input slots
-			if (!TileGrinder.getGrindingResultForItem(sourceStack).isEmpty()){
+			if (!TileGrinder.getGrindingResultR1(sourceStack).isEmpty()){
 				if (!mergeItemStack(sourceStack, INPUT_SLOT_INDEX, INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
 					return ItemStack.EMPTY;
 				}

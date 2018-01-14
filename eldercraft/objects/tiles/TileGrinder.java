@@ -54,7 +54,6 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	//active area
 	@Override
 	public void update() {
-		// TODO the thing that is updated each tick	
 		//add fuel to "tank"
 		if (canGrind()) {//change this to if there is room in the tank
 			boolean fuelBurning = burnFuel();
@@ -71,7 +70,8 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 				grindItem();
 				grindTime = 0;
 			}
-		}else{
+		}
+		else{
 			grindTime = 0;
 		}
 		
@@ -119,63 +119,108 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	private void grindItem() {
 		grindItem(true);
 	}
-	private boolean grindItem(boolean performSmelt) {
-		//this is called every tick
+	private boolean grindItem(boolean performGrind) {
 		Integer suitableInputSlot = null;
-		Integer firstSuitableOutputSlot = null;
-		ItemStack result = ItemStack.EMPTY;  //EMPTY_ITEM
+		Integer validOutputSlot1 = null;
+		Integer validOutputSlot2 = null;
+		Integer validOutputSlot3 = null;
+		Integer volume1 = 0;
+		Integer volume2 = 0;
+		Integer volume3 = 0;
+		ItemStack result1 = ItemStack.EMPTY;
+		ItemStack result2 = ItemStack.EMPTY;
+		ItemStack result3 = ItemStack.EMPTY;
+		Boolean canCheck = false;
+		Integer volume1True = 0;
+		
 		if (!itemStacks[GRIND_SLOT].isEmpty()) {
-			result = getGrindingResultForItem(itemStacks[GRIND_SLOT]);
-			//TODO may need this later --- System.err.println("there is an item in the grind slot " + itemStacks[GRIND_SLOT].getDisplayName() + " and it will make " + result.getDisplayName());
-			if (!result.isEmpty()) {
+			result1 = getGrindingResultR1(itemStacks[GRIND_SLOT]);
+			result2 = getGrindingResultR2(itemStacks[GRIND_SLOT]);
+			result3 = getGrindingResultR3(itemStacks[GRIND_SLOT]);
+			volume1 = getGrindingResultV1(itemStacks[GRIND_SLOT]);
+			volume2 = getGrindingResultV1(itemStacks[GRIND_SLOT]);
+			volume3 = getGrindingResultV1(itemStacks[GRIND_SLOT]);
+			canCheck = GrinderManager.instance().getCanCheck(itemStacks[GRIND_SLOT]);
+
+			if (!result1.isEmpty()) {
+				Integer volume1Base  = volume1 / 100;
+				Integer volume1Chance = volume1 % 100;
+				
+				if ((Math.random() * 100) < volume1Chance) {
+					 volume1True = volume1Base + 1;
+				}
+				else{
+					volume1True = volume1Base;
+				}
+				
 				for (int outputSlot = FIRST_OUTPUT_SLOT; outputSlot < FIRST_OUTPUT_SLOT + OUTPUT_SLOTS_COUNT; outputSlot++) {
-					ItemStack outputStack = itemStacks[outputSlot];
+					ItemStack outputStack = itemStacks[outputSlot];// 3 4 5 6
+					
 					if (outputStack.isEmpty()) {
 						suitableInputSlot = GRIND_SLOT;
-						firstSuitableOutputSlot = outputSlot;
+						validOutputSlot1 = outputSlot;
 						break;
 					}
-					if (outputStack.getItem() == result.getItem() &&
-							(!outputStack.getHasSubtypes() ||
-									outputStack.getMetadata() == outputStack.getMetadata())
-							&& ItemStack.areItemStackTagsEqual(outputStack, result)) {
+					if (outputStack.getItem() == result1.getItem() &&
+							(!outputStack.getHasSubtypes() || outputStack.getMetadata() == outputStack.getMetadata())
+							&& ItemStack.areItemStackTagsEqual(outputStack, result1)) {
 						
-						int combinedSize = itemStacks[outputSlot].getCount() + result.getCount();
-						
+						int combinedSize = itemStacks[outputSlot].getCount() + volume1True;
 						
 						if (combinedSize <= getInventoryStackLimit() && combinedSize <= itemStacks[outputSlot].getMaxStackSize()) {
 							suitableInputSlot = GRIND_SLOT;
-							firstSuitableOutputSlot = outputSlot;
+							validOutputSlot1 = outputSlot;
 							break;
 						}
 					}
-				}	
+				}
 			}
 		}
-		if (suitableInputSlot == null) {
+		if (suitableInputSlot == null || validOutputSlot1 == null){
 			return false;
 		}
-		if (!performSmelt) {
+		if (!performGrind){
 			return true;
 		}
-		
+		//TODO add all outputs
 		// alter input and output
 		itemStacks[suitableInputSlot].shrink(1);
-		if (itemStacks[suitableInputSlot].getCount() <= 0) {
+		if (itemStacks[suitableInputSlot].getCount() <= 0){
 			itemStacks[suitableInputSlot] = ItemStack.EMPTY;
 		}
-		//TODO check if a can is used and shrink that also
-		if (itemStacks[firstSuitableOutputSlot].isEmpty()) {
-			itemStacks[firstSuitableOutputSlot] = result.copy();
-		}else{
-			int newStackSize = itemStacks[firstSuitableOutputSlot].getCount() + result.getCount();
-			itemStacks[firstSuitableOutputSlot].setCount(newStackSize);
+		// check if a can is used and shrink that also
+		
+		if (itemStacks[validOutputSlot1].isEmpty()){
+			ItemStack result1Modified = result1.copy();
+			result1Modified.setCount(volume1True);
+			itemStacks[validOutputSlot1] = result1Modified.copy();
+		}
+		else{
+			int newStackSize = itemStacks[validOutputSlot1].getCount() + volume1True;
+			itemStacks[validOutputSlot1].setCount(newStackSize);
 		}
 		markDirty();
 		return true;
 	}
-	public static ItemStack getGrindingResultForItem(ItemStack stack) {
-		return GrinderManager.instance().getGrindingResult(stack);
+	
+	//output block
+	public static ItemStack getGrindingResultR1(ItemStack stack){
+		return GrinderManager.instance().getGrindingR1(stack);
+	}
+	public static int getGrindingResultV1(ItemStack stack){
+		return GrinderManager.instance().getGrindingV1(stack);
+	}
+	public static ItemStack getGrindingResultR2(ItemStack stack){
+		return GrinderManager.instance().getGrindingR2(stack);
+	}
+	public static int getGrindingResultV2(ItemStack stack){
+		return GrinderManager.instance().getGrindingV2(stack);
+	}
+	public static ItemStack getGrindingResultR3(ItemStack stack){
+		return GrinderManager.instance().getGrindingR3(stack);
+	}
+	public static int getGrindingResultV3(ItemStack stack){
+		return GrinderManager.instance().getGrindingV3(stack);
 	}
 	//NBT area
 	@Override
@@ -195,17 +240,15 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		
 		NBTTagList dataForAllSlots = new NBTTagList();
 		for (int i = 0; i < this.itemStacks.length; ++i) {
-			if (!this.itemStacks[i].isEmpty()) {  //isEmpty()
+			if (!this.itemStacks[i].isEmpty()){
 				NBTTagCompound dataForThisSlot = new NBTTagCompound();
 				dataForThisSlot.setByte("Slot", (byte) i);
 				this.itemStacks[i].writeToNBT(dataForThisSlot);
 				dataForAllSlots.appendTag(dataForThisSlot);
 			}
 		}
-		
 		// the array of hashmaps is then inserted into the parent hashmap for the container
 		parentNBTTagCompound.setTag("Items", dataForAllSlots);
-
 		// Save everything else
 		parentNBTTagCompound.setShort("GrindTime", grindTime);
 		parentNBTTagCompound.setTag("burnTimeRemaining", new NBTTagInt(burnTimeRemaining));
@@ -216,7 +259,6 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	@Override
 	public void readFromNBT(NBTTagCompound parentNBTTagCompound){
 		// TODO whatever the fuck needs to be added to make this work for us ... i can't give a shit much longer
-		
 		super.readFromNBT(parentNBTTagCompound); // The super call is required to save and load the tiles location
 		final byte NBT_TYPE_COMPOUND = 10;       // See NBTBase.createNewByType() for a listing
 		NBTTagList dataForAllSlots = parentNBTTagCompound.getTagList("Items", NBT_TYPE_COMPOUND);
