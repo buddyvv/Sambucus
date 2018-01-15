@@ -24,10 +24,9 @@ import sambucus.eldercraft.initialization.ItemInitialization;
 import sambucus.eldercraft.utility.managers.GrinderManager;
 
 public class TileGrinder extends TileEntity implements IInventory, ITickable {
-	//part of the fuel storage
-	private final int FUEL_MAX = 1000;//may be a config thing later
-	private int intFuelHave = 0;//FUEL IN THE TANK
-	
+
+	private final int FUEL_MAX = 1600;							//Max Amount of Fuel that can be held in the internal tank
+	private int intFuelHave = 0;						
 	private ItemStack[] itemStacks;
 	private boolean cachedBurn = false;
 	public static final int OUTPUT_SLOTS_COUNT = 4;
@@ -37,25 +36,23 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	public static final int GRIND_SLOT = 1;
 	public static final int CAN_SLOT = 2;
 	public static final int FIRST_OUTPUT_SLOT = 3;
-	private int burnTimeRemaining = 0;
-	private int burnTimeInitialValue;
-	private short grindTime;
-	//private static final short GRIND_TIME_FOR_COMPLETION = 200; // time is not the same for all items
 	private static final byte GRIND_FIELD_ID = 0;
 	private static final byte BURN_TIME_REMAINING_FIELD_ID = 1;
 	private static final byte BURN_TIME_INITIAL_FIELD_ID = 2;
 	private static final byte POWER_IN_TANK_ID = 3;
 	private static final byte NUMBER_OF_FIELDS = 4;
 	
+	private int burnTimeRemaining = 0;			//For GUI animations
+	private int burnTimeInitialValue;
+	private short grindTime;
+	
 	public TileGrinder() {
 		itemStacks = new ItemStack[TOTAL_SLOTS_COUNT];
 		clear();
 	}
-	//active area
 	@Override
 	public void update() {
-		//add fuel to "tank"
-		
+
 		if (intFuelHave < FUEL_MAX) {
 			boolean fuelBurning = burnFuel();
 		}
@@ -143,8 +140,6 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		Boolean out2Flag = false;
 		Boolean out3Flag = false;
 		
-		
-		
 		if (!itemStacks[GRIND_SLOT].isEmpty()) {
 			result1 = getGrindingResultR1(itemStacks[GRIND_SLOT]);
 			result2 = getGrindingResultR2(itemStacks[GRIND_SLOT]);
@@ -198,7 +193,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 						}
 					}
 				}
-				//item 2
+	
 				if(!result2.isEmpty() && volume2True > 0) {
 					out2Flag = true;
 					for (int outputSlot2 = FIRST_OUTPUT_SLOT; outputSlot2 < FIRST_OUTPUT_SLOT + OUTPUT_SLOTS_COUNT; outputSlot2++) {
@@ -220,7 +215,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 							}
 						}
 					}
-					//item 3
+
 					if(!result3.isEmpty() && volume3True > 0) {
 						out3Flag = true;
 						for (int outputSlot3 = FIRST_OUTPUT_SLOT; outputSlot3 < FIRST_OUTPUT_SLOT + OUTPUT_SLOTS_COUNT; outputSlot3++) {
@@ -263,12 +258,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 			
 			return true;
 		}
-		//TODO
-		System.err.println("grind info " + result1.getDisplayName() + " " + volume1True + " from " + volume1);
-		System.err.println(result2.getDisplayName() + " " + volume2True + " from " + volume2);
-		System.err.println(result3.getDisplayName() + " " + volume3True + " from " + volume3);
-		System.err.println("random " + Math.random());
-		// alter input and output
+
 		itemStacks[suitableInputSlot].shrink(1);
 		if (itemStacks[suitableInputSlot].getCount() <= 0){
 			itemStacks[suitableInputSlot] = ItemStack.EMPTY;
@@ -290,7 +280,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 			int newStackSize = itemStacks[validOutputSlot1].getCount() + volume1True;
 			itemStacks[validOutputSlot1].setCount(newStackSize);
 		}
-		//item2
+
 		if(out2Flag) {
 			if (itemStacks[validOutputSlot2].isEmpty()){
 				ItemStack result2Modified = result2.copy();
@@ -303,7 +293,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 				itemStacks[validOutputSlot2].setCount(newStackSize);
 			}
 		}
-		//item3
+
 		if(out3Flag) {
 			if (itemStacks[validOutputSlot3].isEmpty()){
 				ItemStack result3Modified = result3.copy();
@@ -320,7 +310,6 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		return true;
 	}
 	
-	//output block
 	public static ItemStack getGrindingResultR1(ItemStack stack){
 		return GrinderManager.instance().getGrindingR1(stack);
 	}
@@ -342,7 +331,11 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 	public static int getGrindCost(ItemStack stack) {
 		return GrinderManager.instance().getGrindingCost(stack);
 	}
+	
+	
+	
 	//NBT area
+	//TODO
 	@Override
 	public NBTTagCompound getUpdateTag(){
 	    NBTTagCompound nbtTagCompound = new NBTTagCompound();
@@ -398,9 +391,12 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		burnTimeInitialValue = parentNBTTagCompound.getInteger("burnTimeInitial");
 		cachedBurn = false;
 	}
+	
+	
+	
 	@Override
 	@Nullable
-	public SPacketUpdateTileEntity getUpdatePacket(){//was a crash from here
+	public SPacketUpdateTileEntity getUpdatePacket(){
 		NBTTagCompound updateTagDescribingTileEntityState = getUpdateTag();
 		final int METADATA = 0;
 		return new SPacketUpdateTileEntity(this.pos, METADATA, updateTagDescribingTileEntityState);
@@ -422,13 +418,19 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		if (burnTimeRemaining <= 0 ) {
 			return 0;
 		}
-		return burnTimeRemaining / 20; // 20 ticks per second
+		return burnTimeRemaining / 20;
 	}
 	public double fractionOfGrindTimeComplete(){
 		double fraction = grindTime / (double)getGrindCost(itemStacks[GRIND_SLOT]);
 		return MathHelper.clamp(fraction, 0.0, 1.0);
 	}
-	
+	public double fractionOfTankRemaining(){
+		if (intFuelHave <= 0 ) {
+			return 0;
+		}
+		double fraction = intFuelHave / (double)FUEL_MAX;
+		return MathHelper.clamp(fraction, 0.0, 1.0);
+	}
 	@Override
 	public String getName() {
 		return "container.ec0_inventory_grinder.name";
@@ -463,7 +465,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		}
 
 		ItemStack itemStackRemoved;
-		if (itemStackInSlot.getCount() <= count) { //getStackSize
+		if (itemStackInSlot.getCount() <= count) {
 			itemStackRemoved = itemStackInSlot;
 			
 			setInventorySlotContents(slotIndex, ItemStack.EMPTY);
@@ -515,6 +517,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		return false;
 	}
 	
+	//TODO
 	@Override
 	public int getField(int id) {
 		if (id == GRIND_FIELD_ID) {
@@ -539,9 +542,11 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		} else if (id == BURN_TIME_INITIAL_FIELD_ID) {
 			burnTimeInitialValue = value;
 		} else {
-			System.err.println("Invalid field ID in TileInventorySmelting.setField:" + id);//still useful for now
+			System.err.println("Invalid field ID in TileInventorySmelting.setField:" + id);
 		}
 	}
+	
+	
 	@Override
 	public int getFieldCount() {
 		return NUMBER_OF_FIELDS;
@@ -554,7 +559,7 @@ public class TileGrinder extends TileEntity implements IInventory, ITickable {
 		return false;
 	}
 	public static boolean isItemValidForOutputSlot(ItemStack stack) {
-		return false;//no placing items in the wrong end
+		return false;
 	}
 	public static boolean isItemValidForInputSlot(ItemStack stack) {
 		return true;
