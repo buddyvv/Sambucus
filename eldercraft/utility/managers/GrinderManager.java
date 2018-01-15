@@ -57,43 +57,53 @@ public class GrinderManager {
 		//the place the list is to be written
 		this.addGinderRecipe(Items.BEEF, 400, false,
 				new ItemStack(ItemInitialization.PATTYRAWBEEF), 350,
-				new ItemStack(Items.DYE , 15), 175,
+				new ItemStack(Items.DYE , 1, 15), 175,
 				new ItemStack(Items.LEATHER), 100);
 		
 		this.addGinderRecipe(Items.PORKCHOP, 200, false,
 				new ItemStack(ItemInitialization.PATTYRAWPORK), 225,
-				new ItemStack(Items.DYE , 15), 60,
+				new ItemStack(Items.DYE , 1, 15), 60,
 				new ItemStack(Items.LEATHER), 30);
 		
 		this.addGinderRecipe(Items.CHICKEN, 300, false,
 				new ItemStack(ItemInitialization.PATTYRAWCHICKEN), 100,
-				new ItemStack(Items.DYE , 15), 80,
+				new ItemStack(Items.DYE , 1, 15), 80,
 				new ItemStack(Items.WHEAT_SEEDS), 100);//change it to random seed type later
 		
 		this.addGinderRecipe(Items.RABBIT, 100, false,
 				new ItemStack(ItemInitialization.PATTYRAWLEAN), 100,
-				new ItemStack(Items.DYE , 15), 10,
+				new ItemStack(Items.DYE , 1, 15), 10,
 				new ItemStack(Items.RABBIT_FOOT), 1);
 		
-		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 0, 32767), 100, false,//normal
+		this.addGinderRecipe(Items.MUTTON, 200, false,
+				new ItemStack(ItemInitialization.PATTYRAWMUTTON), 175,
+				new ItemStack(Items.DYE, 1, 15), 30,
+				ItemStack.EMPTY, 0);
+		
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 1, 0), 100, false,//normal
 				new ItemStack(ItemInitialization.PATTYRAWFISH), 100,
-				new ItemStack(Items.DYE , 15), 50,
+				new ItemStack(Items.DYE ,1, 15), 50,
 				new ItemStack(ItemInitialization.FISHSCALES), 10);
 		
-		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 1, 32767), 200, false,//salmon
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 1, 1), 200, false,//salmon
 				new ItemStack(ItemInitialization.PATTYRAWFISH), 125,
-				new ItemStack(Items.DYE , 15), 80,
+				new ItemStack(Items.DYE , 1, 15), 80,
 				new ItemStack(ItemInitialization.FISHSCALES), 80);
 		
-		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 2, 32767), 100, false,//clown
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 1, 2), 100, false,//clown
 				new ItemStack(ItemInitialization.PATTYRAWFISH), 75,
-				new ItemStack(Items.DYE , 15), 25,
+				new ItemStack(Items.DYE , 1, 15), 25,
 				new ItemStack(ItemInitialization.OILYSKIN), 75);
 		
-		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 3, 32767), 100, false,//puff
+		this.addGinderRecipeFinal(new ItemStack(Items.FISH , 1, 3), 100, false,//puff
 				new ItemStack(ItemInitialization.PATTYRAWFISH), 80,
-				new ItemStack(Items.DYE , 15), 10,
+				new ItemStack(Items.DYE , 1, 15), 10,
 				new ItemStack(ItemInitialization.POISONGLAND), 100);
+		
+		this.addGinderRecipe(ItemInitialization.CLUSTEROFBERRIES, 100, true,//test
+				new ItemStack(ItemInitialization.MASHGROWING), 100,
+				new ItemStack(ItemInitialization.JUICEBURNTCAN), 100,
+				ItemStack.EMPTY, 0);
 	}
 	public void addGinderRecipe(Item input, int fuel, boolean hasCan,
 			ItemStack output1, int output1Volume,
