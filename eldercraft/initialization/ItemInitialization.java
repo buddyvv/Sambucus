@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import sambucus.eldercraft.objects.items.Bread_Potion;
-import sambucus.eldercraft.objects.items.Bread_Sliced;
 import sambucus.eldercraft.objects.items.Brew_FishScales;
 import sambucus.eldercraft.objects.items.Brew_OilySkin;
 import sambucus.eldercraft.objects.items.Brew_PoisonGlands;
@@ -49,7 +48,7 @@ public class ItemInitialization {
 	public static final Item ZOMBIELUMPS		= new Brew_ZombieLumps("item_zombielumps");
 	
 	//brew results
-	public static final Item BREADPOTION 		= new Bread_Potion("item_breadpotion", 4, false);
+	public static final Item BREADPOTION 		= new Bread_Potion("item_breadpotion", 4, false);//will need to do something with potion effects
 	
 	//Initialization of Items using cans
 	public static final Item IRONCAN 			= new Can_Iron("item_ironcan");
@@ -65,27 +64,26 @@ public class ItemInitialization {
 	public static final Item MASHSOFT	 		= new Mash_Soft("item_softmash");
 	
 	//Initialization of Miscellaneous Foods
-	public static final Item BREADSLICED	 	= new Bread_Sliced("item_breadsliced", 4, false);
-	public static final Item KETCHUP			= new Condiment_Ketchup("item_ketchup",0 ,false);//red
-	public static final Item MUSTARD			= new Condiment_Mustard("item_mustard",0 ,false);//yellow
-	public static final Item MAYO				= new Condiment_Mayo("item_mayo",0,false);//white
+	public static final Item KETCHUP			= new Condiment_Ketchup("item_ketchup",1 ,false);//red
+	public static final Item MUSTARD			= new Condiment_Mustard("item_mustard",1 ,false);//yellow
+	public static final Item MAYO				= new Condiment_Mayo("item_mayo",1,false);//white
 	
 	//Initialization of Raw Patties
-	public static final Item PATTYRAWBEEF 		= new Patty_RawBeef("item_rawbeefpatty", 2, false);	
-	public static final Item PATTYRAWCHICKEN 	= new Patty_RawChicken("item_rawchickenpatty", 2, false);	
-	public static final Item PATTYRAWFISH 		= new Patty_RawFish("item_rawfishpatty", 2, false);	
-	public static final Item PATTYRAWLEAN 		= new Patty_RawLean("item_rawleanpatty", 2, false);
-	public static final Item PATTYRAWMUTTON		= new Patty_RawMutton("item_rawmuttonpatty", 2, false);	
-	public static final Item PATTYRAWPORK 		= new Patty_RawPork("item_rawporkpatty",	2, false);
+	public static final Item PATTYRAWBEEF 		= new Patty_RawBeef("item_rawbeefpatty",2, true);
+	public static final Item PATTYRAWCHICKEN 	= new Patty_RawChicken("item_rawchickenpatty",2, true);
+	public static final Item PATTYRAWFISH 		= new Patty_RawFish("item_rawfishpatty",2, true);
+	public static final Item PATTYRAWLEAN 		= new Patty_RawLean("item_rawleanpatty",2, true);
+	public static final Item PATTYRAWMUTTON		= new Patty_RawMutton("item_rawmuttonpatty",2, true);
+	public static final Item PATTYRAWPORK 		= new Patty_RawPork("item_rawporkpatty",2, true);
 	
 	//Initialization of Cooked Patties
-	public static final Item PATTYCOOKEDBEEF 	= new Patty_CookedBeef("item_cookedbeefpatty", 4, false);
-	public static final Item PATTYCOOKEDCHICKEN = new Patty_CookedChicken("item_cookedchickenpatty", 4, false);
-	public static final Item PATTYCOOKEDFISH 	= new Patty_CookedFish("item_cookedfishpatty", 4, false);
-	public static final Item PATTYCOOKEDLEAN 	= new Patty_CookedLean("item_cookedleanpatty", 4, false);
-	public static final Item PATTYCOOKEDMUTTON 	= new Patty_CookedMutton("item_cookedmuttonpatty", 4, false);
-	public static final Item PATTYCOOKEDPORK 	= new Patty_CookedPork("item_cookedporkpatty", 4, false);
-	public static final Item PATTYZMEAT 		= new Patty_ZMeat("item_zmeatpatty", 0, false, new PotionEffect(Potion.getPotionById(17), 200, 100));
+	public static final Item PATTYCOOKEDBEEF 	= new Patty_CookedBeef("item_cookedbeefpatty", 4, true);
+	public static final Item PATTYCOOKEDCHICKEN = new Patty_CookedChicken("item_cookedchickenpatty", 4, true);
+	public static final Item PATTYCOOKEDFISH 	= new Patty_CookedFish("item_cookedfishpatty", 4, true);
+	public static final Item PATTYCOOKEDLEAN 	= new Patty_CookedLean("item_cookedleanpatty", 4, true);
+	public static final Item PATTYCOOKEDMUTTON 	= new Patty_CookedMutton("item_cookedmuttonpatty", 4, true);
+	public static final Item PATTYCOOKEDPORK 	= new Patty_CookedPork("item_cookedporkpatty", 4, true);
+	public static final Item PATTYZMEAT 		= new Patty_ZMeat("item_zmeatpatty", 0, true, new PotionEffect(Potion.getPotionById(17), 200, 100));
 	
 	//Initialization of temporary items
 	public static final Item CLUSTEROFBERRIES 	= new TempBerries("item_clusterofberries");
