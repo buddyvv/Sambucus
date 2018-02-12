@@ -1,2 +1,2 @@
 # Sambucus
-# A mod created by Stratigist, Tylerun, Buddy, and Tobi
+# A mod created by Stratigist, Tobi, Tylerun, Abombanation, & Buddy.
